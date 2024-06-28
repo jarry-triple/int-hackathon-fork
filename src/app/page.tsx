@@ -7,6 +7,7 @@ export default function Home(props: Props) {
 			<Container>
 				<Title>Life is sour as pickle</Title>
 				<Text>Or Maybe NOT!</Text>
+				<Text>케이지 없는 케이지팀</Text>
 			</Container>
 		</TypographyStylesProvider>
 	)
