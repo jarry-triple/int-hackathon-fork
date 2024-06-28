@@ -1,14 +1,13 @@
 import { Container, Title, Text, TypographyStylesProvider } from '@mantine/core'
 
-export default function Home() {
+type Props = {}
+export default function Home(props: Props) {
 	return (
 		<TypographyStylesProvider>
-			<main>
-				<Container>
-					<Title>Life is sour as pickle</Title>
-					<Text>Or Maybe NOT!</Text>
-				</Container>
-			</main>
+			<Container>
+				<Title>Life is sour as pickle</Title>
+				<Text>Or Maybe NOT!</Text>
+			</Container>
 		</TypographyStylesProvider>
 	)
 }
