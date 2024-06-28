@@ -5,8 +5,6 @@ import { FunctionComponent } from 'react'
 
 type Props = {}
 
-Text
-
 const ProdutHeader: FunctionComponent = (props: Props) => {
 	return (
 		<BackgroundImage
