@@ -1,40 +1,85 @@
 'use client'
 
-import { Badge, Center, Popover, Text } from '@mantine/core'
-import { FunctionComponent, useState } from 'react'
+import {
+  Badge,
+  Center,
+  HoverCard,
+  Overlay,
+  Paper,
+  Popover,
+  Text,
+} from '@mantine/core'
+import { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { IconPlus } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
+import ProductCard from './ProductCard'
+import { badge } from './ProductBadge.css'
 
 type Props = {
-  x?: number
-  y?: number
+  coordinates: {
+    x: number
+    y: number
+  }
 }
 
-const ProductBadge: FunctionComponent = (props: Props) => {
-  const [opened, { close, open }] = useDisclosure(false)
+const dummyResource = {
+  imageUrl:
+    'https://images.pexels.com/photos/3667564/pexels-photo-3667564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+  title: '금문교',
+  rating: 4.5,
+  region: {
+    name: '샌프란시스코',
+  },
+  resourceId: '82e32eb8-2470-4522-b61a-0ca40fd98534',
+  resourceType: 'attraction' as const,
+}
+
+const ProductBadge: FunctionComponent<Props> = (props: Props) => {
+  const [showOverlay, setShowOverlay] = useState(false)
+
+  const handleOverlayOpen = () => {
+    setShowOverlay(true)
+  }
+
+  const handleOverlayClose = () => {
+    setShowOverlay(false)
+  }
 
   return (
     <>
-      <Popover opened={opened} position="bottom" withArrow shadow="md">
-        <Popover.Target>
+      {showOverlay && <Overlay backgroundOpacity={0.5} color="black" />}
+      <HoverCard
+        position="bottom"
+        withArrow
+        arrowSize={16}
+        shadow="md"
+        width="280px"
+        onOpen={handleOverlayOpen}
+        onClose={handleOverlayClose}
+      >
+        <HoverCard.Target>
           <Badge
+            component="button"
             size="md"
             circle
-            component="button"
-            onMouseEnter={open}
-            onMouseLeave={close}
+            color="#3DF110"
+            style={{
+              top: props.coordinates.y,
+              left: props.coordinates.x,
+              zIndex: 201,
+              opacity: showOverlay ? 0.25 : 1,
+            }}
+            className={badge}
           >
             <Center>
-              <IconPlus stroke={2} size={16} />
+              <IconPlus stroke={4} size={16} />
             </Center>
           </Badge>
-        </Popover.Target>
-        <Popover.Dropdown style={{ pointerEvents: 'none' }}>
-          <Text size="sm">
-            This popover is shown when user hovers the target element
-          </Text>
-        </Popover.Dropdown>
-      </Popover>
+        </HoverCard.Target>
+        <HoverCard.Dropdown>
+          <ProductCard {...dummyResource} />
+        </HoverCard.Dropdown>
+      </HoverCard>
     </>
   )
 }

@@ -19,6 +19,12 @@ const ProdutHeader: FunctionComponent = (props: Props) => {
       w={375}
       className={wrapper}
     >
+      <ProductBadge
+        coordinates={{
+          x: 100,
+          y: 100,
+        }}
+      />
       <Stack h="100%" justify="space-between">
         <Box pt="1rem" pl="1.4rem">
           <GoBackButton />
@@ -28,8 +34,6 @@ const ProdutHeader: FunctionComponent = (props: Props) => {
           <ForkButton />
         </Group>
       </Stack>
-
-      {/* <ProductBadge /> */}
     </BackgroundImage>
   )
 }

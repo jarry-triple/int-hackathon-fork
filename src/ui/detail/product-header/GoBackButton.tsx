@@ -1,5 +1,9 @@
 import { ActionIcon } from '@mantine/core'
-import { IconCircleArrowLeftFilled } from '@tabler/icons-react'
+import {
+  IconArrowLeft,
+  IconCircleArrowLeft,
+  IconCircleArrowLeftFilled,
+} from '@tabler/icons-react'
 import { FunctionComponent } from 'react'
 import { goBackButton } from './GoBackButton.css'
 import { useRouter } from 'next/navigation'
@@ -9,13 +13,14 @@ const GoBackButton: FunctionComponent = () => {
 
   return (
     <ActionIcon
+      variant="default"
       size="xl"
+      radius="xl"
       aria-label="action icon"
-      color="transparent"
       className={goBackButton}
       onClick={() => router.push('/')}
     >
-      <IconCircleArrowLeftFilled size="42px" stroke={0} />
+      <IconArrowLeft size="30px" stroke={1} fill="white" color="black" />
     </ActionIcon>
   )
 }

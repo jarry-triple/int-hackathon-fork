@@ -3,8 +3,8 @@ import { vars } from '~/ui/theme'
 
 export const forkButton = style({
   borderRadius: '50%',
-  ':hover': {
-    cursor: 'pointer',
-    backgroundColor: 'white',
-  },
+  // ':hover': {
+  //   cursor: 'pointer',
+  //   backgroundColor: '#3DF110',
+  // },
 })

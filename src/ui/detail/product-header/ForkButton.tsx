@@ -6,9 +6,8 @@ import { forkButton } from './ForkButton.css'
 const ForkButton: FunctionComponent = () => {
   return (
     <ActionIcon
-      size="xl"
       aria-label="action icon"
-      color="white"
+      variant="default"
       w={'55px'}
       h={'55px'}
       className={forkButton}
