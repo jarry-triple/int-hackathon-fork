@@ -52,6 +52,7 @@ function ImageListingWithAddButton({
               fontSize: '15px',
               color: '#8C8C8C',
               fontWeight: '300',
+              width: '100%',
             }}
             radius="md"
           >

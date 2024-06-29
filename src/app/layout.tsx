@@ -31,8 +31,10 @@ export default function RootLayout({
 
       <body>
         <MantineProvider theme={theme}>
-          <Container maw={385} mih={'100dvh'} p={0} m={0} mx="auto">
-            <ServiceNameHeader />
+          <Container maw={385} size="responsive">
+            <Container>
+              <ServiceNameHeader />
+            </Container>
             {children}
           </Container>
         </MantineProvider>
