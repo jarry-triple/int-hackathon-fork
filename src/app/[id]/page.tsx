@@ -8,9 +8,9 @@ import {
   TypographyStylesProvider,
 } from '@mantine/core'
 
-import ProductHeader from '~/ui/detail/ProductHeader'
 import { ResourceType, toReadableResourceType } from '~/utils/resource-types'
 import { toDotSeparatedString } from '~/utils/string-utils'
+import ProductHeader from '~/ui/detail/product-header/ProductHeader'
 
 type Props = {
   params: {
@@ -33,7 +33,6 @@ export default function ImageDetailPage(props: Props) {
   return (
     <TypographyStylesProvider>
       <Container>
-        <Title>ImageDetail</Title>
         <ProductHeader />
       </Container>
 
