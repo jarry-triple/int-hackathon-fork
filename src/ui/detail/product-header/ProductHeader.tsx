@@ -1,6 +1,6 @@
 'use client'
 
-import { BackgroundImage, Group, Stack } from '@mantine/core'
+import { BackgroundImage, Box, Group, Stack } from '@mantine/core'
 import { FunctionComponent } from 'react'
 
 import UserAvatar from './UserAvatar'
@@ -19,14 +19,17 @@ const ProdutHeader: FunctionComponent = (props: Props) => {
       w={375}
       className={wrapper}
     >
-      <ProductBadge />
-      <Stack>
-        <GoBackButton />
-        <Group justify="flex-end">
-          <ForkButton />
+      <Stack h="100%" justify="space-between">
+        <Box pt="1rem" pl="1.4rem">
+          <GoBackButton />
+        </Box>
+        <Group pb="1.5rem" px="1.5rem" justify="space-between" align="flex-end">
           <UserAvatar />
+          <ForkButton />
         </Group>
       </Stack>
+
+      {/* <ProductBadge /> */}
     </BackgroundImage>
   )
 }

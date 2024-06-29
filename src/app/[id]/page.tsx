@@ -31,19 +31,19 @@ const dummyResource = {
 
 export default function ImageDetailPage(props: Props) {
   return (
-    <TypographyStylesProvider>
-      <Container>
-        <ProductHeader />
-      </Container>
+    <>
+      <ProductHeader />
 
-      <ResourceInfoCard
-        imageUrl={dummyResource.imageUrl}
-        title={dummyResource.title}
-        info={dummyResource.info}
-        region={dummyResource.region}
-        resourceType={dummyResource.resourceType}
-      />
-    </TypographyStylesProvider>
+      <TypographyStylesProvider>
+        <ResourceInfoCard
+          imageUrl={dummyResource.imageUrl}
+          title={dummyResource.title}
+          info={dummyResource.info}
+          region={dummyResource.region}
+          resourceType={dummyResource.resourceType}
+        />
+      </TypographyStylesProvider>
+    </>
   )
 }
 
