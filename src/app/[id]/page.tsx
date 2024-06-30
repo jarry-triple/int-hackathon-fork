@@ -85,6 +85,7 @@ export default function ImageDetailPage(props: Props) {
           resourceType={dummyResource.resourceType}
         />
         <ProductListing productList={dummyProductList}></ProductListing>
+        <MoreImages images={dummyImages} />
       </TypographyStylesProvider>
     </>
   )
@@ -236,6 +237,29 @@ function ProductItem({ id, image, title, type }: ProductItemProps) {
       <Text lineClamp={1} color="#8C8C8C" fz={10}>
         {type}
       </Text>
+    </div>
+  )
+}
+
+/** 더 찾아보기 */
+function MoreImages({ images }: { images: (string | undefined)[] }) {
+  return (
+    <div>
+      <div>
+        <Text
+          lineClamp={1}
+          color="#2A2A2A"
+          fz={16}
+          fw="bold"
+          mb={0}
+          style={{ marginTop: '20px' }}
+        >
+          더 찾아보기
+        </Text>
+      </div>
+      <div>
+        <ImageListing images={images} showAddButton={false} />
+      </div>
     </div>
   )
 }
