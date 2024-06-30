@@ -14,7 +14,7 @@ const dummyImages = [
   undefined,
 ]
 
-export function DefaultPage() {
+export function WelcomePage() {
   return (
     <div>
       <div style={{ paddingBottom: '30px', paddingTop: '25px' }}>
@@ -24,11 +24,11 @@ export function DefaultPage() {
           좋아하시나요?
         </Title>
         <Text style={{ fontSize: '13px', whiteSpace: 'nowrap' }}>
-          취향에 맞는 여행 사진을 PICK 해보세요!
+          선택한 3개 이미지 또는 직접 등록한 이미지로 맞춤 추천됩니다.
         </Text>
       </div>
       <div>
-        <ImageListing images={dummyImages} showAddButton={false} />
+        <ImageListing images={dummyImages} showAddButton={true} />
       </div>
     </div>
   )

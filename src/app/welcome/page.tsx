@@ -1,11 +1,11 @@
 import { Container } from '@mantine/core'
-import { DefaultPage } from '~/ui/detail/DefaultPage'
+import { WelcomePage } from '~/ui/detail/WelcomePage'
 
 type Props = {}
 export default function Home(props: Props) {
   return (
     <Container>
-      <DefaultPage />
+      <WelcomePage />
     </Container>
   )
 }
