@@ -1,10 +1,8 @@
 import { style } from '@vanilla-extract/css'
-import { vars } from '~/ui/theme'
 
 export const forkButton = style({
-  borderRadius: '50%',
-  // ':hover': {
-  //   cursor: 'pointer',
-  //   backgroundColor: '#3DF110',
-  // },
+  ':hover': {
+    transform: 'scale(1.1)',
+    transition: 'transform 0.2s ease-in-out',
+  },
 })

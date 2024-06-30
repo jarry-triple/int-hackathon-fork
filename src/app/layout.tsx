@@ -11,7 +11,7 @@ import {
 
 import type { Metadata } from 'next'
 import { theme } from '~/ui/theme'
-import { ServiceNameHeader } from '~/ui/detail/ServiceNameHeader'
+import { ServiceNameHeader } from '~/ui/common/ServiceNameHeader'
 
 // TODO: 설명?
 export const metadata: Metadata = {

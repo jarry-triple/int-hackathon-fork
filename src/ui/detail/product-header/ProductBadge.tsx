@@ -49,13 +49,13 @@ const ProductBadge: FunctionComponent<Props> = (props: Props) => {
     <>
       {showOverlay && <Overlay backgroundOpacity={0.5} color="black" />}
       <HoverCard
-        position="bottom"
         withArrow
         arrowSize={16}
         shadow="md"
         width="280px"
         onOpen={handleOverlayOpen}
         onClose={handleOverlayClose}
+        withinPortal={false}
       >
         <HoverCard.Target>
           <Badge

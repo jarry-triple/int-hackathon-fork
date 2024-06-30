@@ -38,16 +38,19 @@ export const ProductCard: FunctionComponent<Props> = (props: Props) => {
           />
         </Container>
 
-        <Flex flex={3} direction="column" p={10}>
+        <Stack flex={3} px={10} gap={2}>
           <Link
             href={`https://triple-dev.titicaca-corp.com/${props.resourceType}s/${
               props.resourceId
             }`}
+            target="_blank"
+            referrerPolicy="no-referrer"
           >
-            <Text lineClamp={1} color="#2A2A2A" fz={16} fw="bold" mb={0}>
+            <Text lineClamp={1} color="#2A2A2A" fz={16} fw="bold">
               {props.title}
             </Text>
           </Link>
+
           <Rating value={props.rating} fractions={10} readOnly />
 
           <Text lineClamp={1} color="#8C8C8C" fz={12}>
@@ -56,9 +59,8 @@ export const ProductCard: FunctionComponent<Props> = (props: Props) => {
               toReadableResourceType(props.resourceType),
             ])}
           </Text>
-        </Flex>
+        </Stack>
       </Flex>
-
       <Stack gap="0">
         <Flex justify="flex-end">
           <Text size="sm" color="#B4B4B4" td="line-through">
