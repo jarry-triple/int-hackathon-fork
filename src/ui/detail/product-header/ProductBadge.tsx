@@ -32,6 +32,8 @@ const dummyResource = {
   },
   resourceId: '82e32eb8-2470-4522-b61a-0ca40fd98534',
   resourceType: 'attraction' as const,
+  originalPrice: 100000,
+  discountedPrice: 80000,
 }
 
 const ProductBadge: FunctionComponent<Props> = (props: Props) => {
