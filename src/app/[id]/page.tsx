@@ -1,3 +1,4 @@
+'use client'
 import {
   Button,
   Container,
@@ -11,6 +12,9 @@ import {
 import { ResourceType, toReadableResourceType } from '~/utils/resource-types'
 import { toDotSeparatedString } from '~/utils/string-utils'
 import ProductHeader from '~/ui/detail/product-header/ProductHeader'
+import { useHover } from '@mantine/hooks'
+import { useRouter } from 'next/navigation'
+import { ImageListing } from '~/ui/detail/ImageListing'
 
 type Props = {
   params: {
@@ -29,6 +33,44 @@ const dummyResource = {
   resourceType: 'attraction' as const,
 }
 
+const dummyProductList: ProductItemProps[] = [
+  {
+    id: '1',
+    image: 'https://via.placeholder.com/150',
+    title: '제목1',
+    type: '맛집',
+  },
+  {
+    id: '2',
+    image: 'https://via.placeholder.com/150',
+    title: '제목2',
+    type: '숙소',
+  },
+  {
+    id: '3',
+    image: 'https://via.placeholder.com/150',
+    title: '제목3',
+    type: '액티비티',
+  },
+  {
+    id: '4',
+    image: 'https://via.placeholder.com/150',
+    title: '제목4',
+    type: '놀이공원',
+  },
+]
+
+const dummyImages = [
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+]
+
 export default function ImageDetailPage(props: Props) {
   return (
     <>
@@ -42,6 +84,7 @@ export default function ImageDetailPage(props: Props) {
           region={dummyResource.region}
           resourceType={dummyResource.resourceType}
         />
+        <ProductListing productList={dummyProductList}></ProductListing>
       </TypographyStylesProvider>
     </>
   )
@@ -107,5 +150,92 @@ function ResourceInfoCard({
         </Text>
       </Button>
     </Flex>
+  )
+}
+
+interface ProductItemProps {
+  id: string
+  image?: string
+  title: string
+  type: string
+}
+
+interface ProductListingProps {
+  productList: ProductItemProps[]
+}
+
+/** 이 근처 */
+function ProductListing({ productList }: ProductListingProps) {
+  return (
+    <div>
+      <Text
+        lineClamp={1}
+        color="#2A2A2A"
+        fz={16}
+        fw="bold"
+        mb={0}
+        style={{ marginTop: '20px' }}
+      >
+        이 근처
+      </Text>
+      <Flex
+        style={{
+          marginTop: '5px',
+          gap: '10px',
+          overflowX: 'auto',
+          padding: '5px 0',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {productList.map((product, index) => (
+          <ProductItem
+            key={index}
+            id={product.id}
+            image={product.image}
+            title={product.title}
+            type={product.type}
+          />
+        ))}
+      </Flex>
+    </div>
+  )
+}
+
+function ProductItem({ id, image, title, type }: ProductItemProps) {
+  const router = useRouter()
+  const { hovered, ref } = useHover<HTMLDivElement>()
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        position: 'relative',
+        width: '100px',
+        height: '100%',
+        cursor: 'pointer',
+        borderRadius: '8px',
+        backgroundColor: hovered ? '#f0f0f0' : '#ffffff', // placeholder background color
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}
+      onClick={() => router.push(`/${id}`)} // TODO: link to product detail page
+    >
+      <Image
+        onClick={() => router.push(`/${id}`)}
+        alt="product image"
+        radius="md"
+        src={image}
+        height={90}
+        width={90}
+        fallbackSrc="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-6.png"
+      />
+      <Text lineClamp={1} color="#2A2A2A" fz={12} fw="bold" mb={0}>
+        {title}
+      </Text>
+      <Text lineClamp={1} color="#8C8C8C" fz={10}>
+        {type}
+      </Text>
+    </div>
   )
 }
