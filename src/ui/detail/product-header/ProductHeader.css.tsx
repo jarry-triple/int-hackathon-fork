@@ -3,4 +3,5 @@ import { vars } from '~/ui/theme'
 
 export const wrapper = style({
   position: 'relative',
+  overflow: 'hidden',
 })

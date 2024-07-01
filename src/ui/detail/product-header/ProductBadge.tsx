@@ -32,6 +32,8 @@ const dummyResource = {
   },
   resourceId: '82e32eb8-2470-4522-b61a-0ca40fd98534',
   resourceType: 'attraction' as const,
+  originalPrice: 100000,
+  discountedPrice: 80000,
 }
 
 const ProductBadge: FunctionComponent<Props> = (props: Props) => {
@@ -49,13 +51,13 @@ const ProductBadge: FunctionComponent<Props> = (props: Props) => {
     <>
       {showOverlay && <Overlay backgroundOpacity={0.5} color="black" />}
       <HoverCard
-        position="bottom"
         withArrow
         arrowSize={16}
         shadow="md"
         width="280px"
         onOpen={handleOverlayOpen}
         onClose={handleOverlayClose}
+        withinPortal={false}
       >
         <HoverCard.Target>
           <Badge

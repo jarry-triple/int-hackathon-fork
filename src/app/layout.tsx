@@ -11,7 +11,7 @@ import {
 
 import type { Metadata } from 'next'
 import { theme } from '~/ui/theme'
-import { ServiceNameHeader } from '~/ui/detail/ServiceNameHeader'
+import { ServiceNameHeader } from '~/ui/common/ServiceNameHeader'
 
 // TODO: 설명?
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export default function RootLayout({
 
       <body>
         <MantineProvider theme={theme}>
-          <Container maw={385} size="responsive">
+          <Container maw={385} size="responsive" p={0}>
             <Container>
               <ServiceNameHeader />
             </Container>

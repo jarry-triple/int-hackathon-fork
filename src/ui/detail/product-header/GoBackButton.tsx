@@ -1,9 +1,5 @@
 import { ActionIcon } from '@mantine/core'
-import {
-  IconArrowLeft,
-  IconCircleArrowLeft,
-  IconCircleArrowLeftFilled,
-} from '@tabler/icons-react'
+import { IconArrowLeft } from '@tabler/icons-react'
 import { FunctionComponent } from 'react'
 import { goBackButton } from './GoBackButton.css'
 import { useRouter } from 'next/navigation'
