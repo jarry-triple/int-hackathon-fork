@@ -4,6 +4,7 @@ import {
   Container,
   Flex,
   Image,
+  Space,
   Text,
   Title,
   TypographyStylesProvider,
@@ -14,7 +15,8 @@ import { toDotSeparatedString } from '~/utils/string-utils'
 import ProductHeader from '~/ui/detail/product-header/ProductHeader'
 import { useHover } from '@mantine/hooks'
 import { useRouter } from 'next/navigation'
-import { ImageListing } from '~/ui/detail/ImageListing'
+import MoreImages from '~/ui/detail/more-images/MoreImages'
+import LocalItems from '~/ui/detail/local-items/LocalItems'
 
 type Props = {
   params: {
@@ -87,6 +89,8 @@ export default function ImageDetailPage(props: Props) {
         <ProductListing productList={dummyProductList}></ProductListing>
         <MoreImages images={dummyImages} />
       </TypographyStylesProvider>
+      <Space h={28} />
+      <LocalItems products={dummyProductList as any} />
     </>
   )
 }
@@ -237,29 +241,6 @@ function ProductItem({ id, image, title, type }: ProductItemProps) {
       <Text lineClamp={1} color="#8C8C8C" fz={10}>
         {type}
       </Text>
-    </div>
-  )
-}
-
-/** 더 찾아보기 */
-function MoreImages({ images }: { images: (string | undefined)[] }) {
-  return (
-    <div>
-      <div>
-        <Text
-          lineClamp={1}
-          color="#2A2A2A"
-          fz={16}
-          fw="bold"
-          mb={0}
-          style={{ marginTop: '20px' }}
-        >
-          더 찾아보기
-        </Text>
-      </div>
-      <div>
-        <ImageListing images={images} showAddButton={false} />
-      </div>
     </div>
   )
 }
