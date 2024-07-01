@@ -23,6 +23,7 @@ export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
         style={{
           cursor: 'pointer',
           filter: hovered ? 'brightness(0.8)' : 'brightness(1)',
+          position: 'relative',
         }}
         onClick={() => router.push(`/${id}`)}
         alt="image"
@@ -36,9 +37,8 @@ export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
         <div
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            bottom: '1rem',
+            right: '1rem',
             zIndex: 1,
           }}
         >
