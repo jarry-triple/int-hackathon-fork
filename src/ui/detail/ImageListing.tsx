@@ -1,7 +1,9 @@
 'use client'
-import { Button, Flex, Grid } from '@mantine/core'
+import { Button, FileButton, Flex, Grid } from '@mantine/core'
 import { ImageItem } from '~/ui/detail/ImageItem'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { useImagesContext } from '~/contexts/images-context'
+import { useRouter } from 'next/navigation'
 
 // TODO: 이미지 사이 gap 좀 줄이기..
 export function ImageListing({
@@ -11,6 +13,13 @@ export function ImageListing({
   images: (string | undefined)[]
   showAddButton: boolean
 }) {
+  const { selectedImages } = useImagesContext()
+  const router = useRouter()
+
+  if (selectedImages.length === 3) {
+    router.push('/recommend')
+  }
+
   return showAddButton ? (
     <ImageListingWithAddButton images={images} />
   ) : (
@@ -34,38 +43,61 @@ function ImageListingWithAddButton({
     [images],
   )
 
+  // TODO: 작업 추가 필요
+  const [file, setFile] = useState<File | null>()
+
   return (
     <Flex>
       <Grid style={{ paddingRight: '15px' }}>
         {leftImages.map((image, index) => (
           <Grid.Col key={index} span={12}>
-            <ImageItem id={index.toString()} image={image} />
+            <ImageItem id={uuid()} image={image} showForkButton={true} />
           </Grid.Col>
         ))}
       </Grid>
       <Grid>
         <Grid.Col>
-          <Button
-            size="xl"
-            variant="default"
-            style={{
-              fontSize: '15px',
-              color: '#8C8C8C',
-              fontWeight: '300',
-              width: '100%',
-            }}
-            radius="md"
-          >
-            + 직접 등록
-          </Button>
+          <FileButton accept="image/*" onChange={setFile}>
+            {(props) => (
+              <Button
+                {...props}
+                size="xl"
+                variant="default"
+                style={{
+                  fontSize: '15px',
+                  color: '#8C8C8C',
+                  fontWeight: '300',
+                  width: '100%',
+                }}
+                radius="md"
+              >
+                + 직접 등록
+              </Button>
+            )}
+          </FileButton>
         </Grid.Col>
 
         {rightImages.map((image, index) => (
           <Grid.Col key={index} span={12}>
-            <ImageItem key={index} id={index.toString()} image={image} />
+            <ImageItem
+              key={index}
+              id={index.toString()}
+              image={image}
+              showForkButton={true}
+            />
           </Grid.Col>
         ))}
       </Grid>
     </Flex>
   )
+}
+
+export function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+    .replace(/[xy]/g, function (c) {
+      var r = (Math.random() * 16) | 0
+      var v = c === 'x' ? r : (r & 0x3) | 0x8
+      return v.toString(16)
+    })
+    .toUpperCase()
 }

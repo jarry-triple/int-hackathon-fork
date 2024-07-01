@@ -10,12 +10,25 @@ import {
 import { IconFork } from '~/ui/icons/fork'
 import { forkButton } from './ForkButton.css'
 import AnimatedCheckIcon from '~/ui/icons/animted-checkbox'
+import { useImagesContext } from '~/contexts/images-context'
 
-const ForkButton: FunctionComponent = () => {
+type Props = {
+  id?: string
+}
+
+const ForkButton = ({ id }: Props) => {
   const [clicked, setClicked] = useState(false)
+  const { selectedImages, setSelectedImages } = useImagesContext()
 
   const onButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
     setClicked(true)
+    if (id) {
+      setSelectedImages(
+        Array.from(
+          new Set([...selectedImages, id].filter((v) => v !== undefined)),
+        ),
+      )
+    }
   }
 
   useEffect(() => {

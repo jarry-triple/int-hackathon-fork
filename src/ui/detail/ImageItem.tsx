@@ -42,7 +42,7 @@ export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
             zIndex: 1,
           }}
         >
-          <ForkButton />
+          <ForkButton id={id} />
         </div>
       )}
     </div>
