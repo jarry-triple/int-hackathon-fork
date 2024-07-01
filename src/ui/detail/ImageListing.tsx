@@ -17,11 +17,7 @@ export function ImageListing({
     <Grid gutter="xs">
       {images.map((image, index) => (
         <Grid.Col key={index} span={6}>
-          <ImageItem
-            id={index.toString()}
-            image={image}
-            showForkButton={true}
-          />
+          <ImageItem id={index.toString()} image={image} />
         </Grid.Col>
       ))}
     </Grid>
@@ -43,11 +39,7 @@ function ImageListingWithAddButton({
       <Grid style={{ paddingRight: '15px' }}>
         {leftImages.map((image, index) => (
           <Grid.Col key={index} span={12}>
-            <ImageItem
-              id={index.toString()}
-              image={image}
-              showForkButton={true}
-            />
+            <ImageItem id={index.toString()} image={image} />
           </Grid.Col>
         ))}
       </Grid>
@@ -70,12 +62,7 @@ function ImageListingWithAddButton({
 
         {rightImages.map((image, index) => (
           <Grid.Col key={index} span={12}>
-            <ImageItem
-              key={index}
-              id={index.toString()}
-              image={image}
-              showForkButton={true}
-            />
+            <ImageItem key={index} id={index.toString()} image={image} />
           </Grid.Col>
         ))}
       </Grid>

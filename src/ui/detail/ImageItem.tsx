@@ -7,7 +7,7 @@ import ForkButton from './product-header/ForkButton'
 interface ImageItemProps {
   id: string
   image?: string
-  showForkButton: boolean
+  showForkButton?: boolean
 }
 
 export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
