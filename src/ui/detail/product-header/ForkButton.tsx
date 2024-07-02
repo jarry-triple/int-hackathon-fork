@@ -1,12 +1,7 @@
 'use client'
 
 import { ActionIcon } from '@mantine/core'
-import {
-  FunctionComponent,
-  MouseEventHandler,
-  useEffect,
-  useState,
-} from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 import { IconFork } from '~/ui/icons/fork'
 import { forkButton } from './ForkButton.css'
 import AnimatedCheckIcon from '~/ui/icons/animted-checkbox'
@@ -14,14 +9,16 @@ import { useImagesContext } from '~/contexts/images-context'
 
 type Props = {
   id?: string
+  forkCallback?: (forked: boolean) => void
 }
 
-const ForkButton = ({ id }: Props) => {
+const ForkButton = ({ id, forkCallback }: Props) => {
   const [clicked, setClicked] = useState(false)
   const { selectedImages, setSelectedImages } = useImagesContext()
 
   const onButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
     setClicked(true)
+    forkCallback && forkCallback(true)
     if (id) {
       setSelectedImages(
         Array.from(

@@ -3,6 +3,8 @@ import { useRouter } from 'next/navigation'
 import { Image } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import ForkButton from './product-header/ForkButton'
+import { useEffect, useState } from 'react'
+import { IconFork } from '../icons/fork'
 
 interface ImageItemProps {
   id: string
@@ -13,6 +15,11 @@ interface ImageItemProps {
 export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
   const router = useRouter()
   const { hovered, ref } = useHover<HTMLImageElement>()
+  const [forked, setForked] = useState(false)
+
+  useEffect(() => {
+    console.log('포크가 변경됐도다', forked)
+  }, [forked])
 
   return (
     <div
@@ -24,6 +31,7 @@ export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
           cursor: 'pointer',
           filter: hovered ? 'brightness(0.8)' : 'brightness(1)',
           position: 'relative',
+          border: forked ? '5px solid #3DF110' : 'none',
         }}
         onClick={() => router.push(`/${id}`)}
         alt="image"
@@ -33,6 +41,19 @@ export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
         width={153}
         fallbackSrc="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-6.png"
       />
+      {forked && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1,
+          }}
+        >
+          <IconFork color="#3DF110" />
+        </div>
+      )}
       {showForkButton && hovered && (
         <div
           style={{
@@ -42,7 +63,7 @@ export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
             zIndex: 1,
           }}
         >
-          <ForkButton id={id} />
+          <ForkButton id={id} forkCallback={setForked} />
         </div>
       )}
     </div>
