@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { Image } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import ForkButton from './product-header/ForkButton'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { IconFork } from '../icons/fork'
 
 interface ImageItemProps {
@@ -16,10 +16,6 @@ export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
   const router = useRouter()
   const { hovered, ref } = useHover<HTMLImageElement>()
   const [forked, setForked] = useState(false)
-
-  useEffect(() => {
-    console.log('포크가 변경됐도다', forked)
-  }, [forked])
 
   return (
     <div
