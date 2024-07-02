@@ -1,4 +1,4 @@
-import { ObjectId, WithId } from 'mongodb'
+import { ObjectId } from 'mongodb'
 import { ImageModel } from '../types'
 import { randomUUID } from 'node:crypto'
 import { Document as MongoDocument } from 'mongodb'

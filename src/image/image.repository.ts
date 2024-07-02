@@ -1,5 +1,5 @@
 import { BaseMongoRepository } from '~/clients/mongo.client'
-import { ImageEntity } from '~/entities/image.entity'
+import { ImageEntity } from '~/image/image.entity'
 
 class ImageRepository extends BaseMongoRepository<ImageEntity> {
   constructor() {

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import sharp from 'sharp'
 
 export async function convertImageToBase64(
   src:
@@ -10,6 +11,7 @@ export async function convertImageToBase64(
         type: 'url'
         value: string
       },
+  png: boolean = false,
 ): Promise<string> {
   let base64Image = ''
   try {
@@ -17,10 +19,19 @@ export async function convertImageToBase64(
       const response = await axios.get(src.value, {
         responseType: 'arraybuffer',
       })
-      const imageBuffer = Buffer.from(response.data, 'binary')
+      let imageBuffer = Buffer.from(response.data, 'binary')
+      if (png) {
+        imageBuffer = await sharp(imageBuffer).png().toBuffer()
+      }
+
       base64Image = imageBuffer.toString('base64')
     } else {
-      base64Image = src.value.toString('base64')
+      let imageBuffer = src.value
+      if (png) {
+        imageBuffer = await sharp(src.value).png().toBuffer()
+      }
+
+      base64Image = imageBuffer.toString('base64')
     }
 
     return base64Image
