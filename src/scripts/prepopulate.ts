@@ -5,7 +5,11 @@ import { AzureOpenAI } from 'openai'
 
 import { convertImageToBase64 } from '~/utils/convert-image-to-base64'
 import { ChatCompletion } from 'openai/resources/index.mjs'
-import { getGeneralMsgs, getTagsMsgs, sanitizeResponse } from '~/llm-helpers'
+import {
+  getGeneralSeedMsgs,
+  getTagsMsgs,
+  sanitizeResponse,
+} from '~/llm-helpers'
 import { Product } from '../utils/pickle'
 
 type Criteria = {
@@ -169,7 +173,7 @@ async function fetchFromLLMModel(
       const [result, tagsResult] = (await Promise.all([
         client.chat.completions.create({
           // @ts-ignore
-          messages: getGeneralMsgs(base64ImageFormatted),
+          messages: getGeneralSeedMsgs(base64ImageFormatted),
           ...configs,
         }),
         client.chat.completions.create({

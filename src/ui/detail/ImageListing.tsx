@@ -53,8 +53,6 @@ function ImageListingWithAddButton({
         return
       }
 
-      console.log('file', file)
-
       // Create a new FormData instance
       const formData = new FormData()
       formData.append('file', file)
