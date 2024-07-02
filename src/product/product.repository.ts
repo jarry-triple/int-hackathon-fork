@@ -28,6 +28,14 @@ export class ProductRepository extends BaseMongoRepository<ProductEntity> {
     await this.insertOne(product)
     return product
   }
+
+  public async insertManyProducts(
+    products: ProductInput[],
+  ): Promise<ProductEntity[]> {
+    const entities = products.map((product) => ProductEntity.ofNew(product))
+    await this.insertMany(entities)
+    return entities
+  }
 }
 
 export const productRepository = new ProductRepository()

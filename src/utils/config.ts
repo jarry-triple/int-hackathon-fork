@@ -1,5 +1,6 @@
 export const MONGODB_URL =
-  process.env.MONGODB_URL || 'mongodb://localhost:27017/knk'
+  process.env.MONGODB_URL ||
+  'mongodb+srv://kage:knk%231234@knkcluster.mongocluster.cosmos.azure.com/knk?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000'
 
 export const RECOMMENDATION_V2_URL =
   process.env.REACT_APP_RECOMMENDATION_V2_URL ||

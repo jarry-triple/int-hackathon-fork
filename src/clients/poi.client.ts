@@ -25,6 +25,9 @@ query MGetPois(
             reviewsCount
             scrapsCount
         }
+        geoMetadata {
+            geotags
+        }
     }
 }
 `
@@ -47,6 +50,12 @@ export interface MgetPoiForPoiRecommendation {
     reviewsRating: number | null
     reviewsCount: number | null
     scrapsCount: number | null
+  }
+  geoMetadata: {
+    geotags: {
+      id: string
+      type: string
+    }[]
   }
 }
 

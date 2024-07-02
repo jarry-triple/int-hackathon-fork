@@ -3,8 +3,14 @@ import { Image } from '~/utils/triple-types'
 import { MgetPoiForPoiRecommendation, poiClient } from '~/clients/poi.client'
 import { convertImageUrlToImage } from '~/utils/image-utils'
 import { TARGET_REGIONS } from '~/utils/fixtures'
+import { Product } from '~/utils/pickle'
+import { productRepository } from '~/product/product.repository'
+import { ProductInput } from '~/product/product.entity'
+import { client } from '~/clients/mongo.client'
 
 async function run() {
+  await client.connect()
+
   const data = (
     await Promise.all(
       TARGET_REGIONS.map(({ id: regionId }) =>
@@ -30,11 +36,38 @@ async function run() {
     return acc
   }, {})
 
-  // TODO: mongodb insert
-  return Object.values(poisMap).map((poi) => ({
-    ...poi,
-    reviewImages: imagesMap[poi.id],
-  }))
+  const result: ProductInput[] = Object.values(poisMap)
+    .map((poi) => ({
+      ...poi,
+      reviewImages: imagesMap[poi.id],
+    }))
+    .map((value) => ({
+      _id: value.id,
+      type: 'attraction',
+      name: value.source.names.ko ?? '',
+      geotag: {
+        id:
+          value.geoMetadata.geotags.find(({ type }) => type === 'triple-region')
+            ?.id ?? '',
+        type: 'triple-region',
+        name:
+          TARGET_REGIONS.find(
+            ({ id }) =>
+              id ===
+              value.geoMetadata.geotags.find(
+                ({ type }) => type === 'triple-region',
+              )?.id,
+          )?.name ?? '',
+      },
+      image: value.reviewImages,
+    }))
+
+  await productRepository.insertManyProducts(result)
+
+  console.log('done')
+
+  await client.close()
+  process.exit(0)
 }
 
 run()
