@@ -42,7 +42,7 @@ export default function Home({ params: { id } }: Props) {
     }
 
     setImages(images.map(({ imageUrl }) => imageUrl))
-  }, [])
+  }, [id])
 
   useEffect(() => {
     if (images.length === 0) {

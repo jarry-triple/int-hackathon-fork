@@ -1,6 +1,6 @@
 export type LLMImage = {
   locationName: string // should be precise name for the location. (e.g. 'Eiffel Tower' instead of 'tower'). should be in korean
-  region: string // if region is not one of '제주', '도쿄', '바르셀로나', '다낭', '파리', '샌프란시스코', it should be 'etc'
+  region: string // if region is not one of '제주', '오사카', '바르셀로나', '다낭', '파리', otherwise it should be 'etc'.
   locationSummary: string // location summary should provide brief description of the location in korean language only. Must be always full sentence.
   tags: string[] // Tags should include keywords for location. Later used for image similarity search. Tags must be provided in Korean.
   objects: {
@@ -16,7 +16,13 @@ export type LLMImage = {
     }
   }[]
   data: string
-  imageUrl?: string
+
+  productId?: string
+  productType?: string
+  productName?: string
+  productRegion?: string
+  imageId: string
+  imageUrl: string
 }
 
 export type ImageModel = {

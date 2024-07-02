@@ -28,7 +28,7 @@ async function run() {
       continue
     }
 
-    const { _id: imageId, resourceId, tags } = document as ImageEntity
+    const { _id: imageId, tags } = document as ImageEntity
     console.log(`Processing image ${imageId}`)
 
     const result = await client.embeddings.create({

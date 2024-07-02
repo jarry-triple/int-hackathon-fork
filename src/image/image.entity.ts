@@ -3,23 +3,10 @@ import { ImageModel } from '../types'
 import { randomUUID } from 'node:crypto'
 import { Document as MongoDocument } from 'mongodb'
 
-type ImageInput = {
-  locationName: string
-  region: string
-  locationSummary: string
-  tags: string[]
-  objects: {
-    name: string
-    type: 'activity' | 'accomodation' | 'restaurant' | 'attraction'
-    tags: string[]
-    position: { x: number; y: number }
-  }[]
-  data: string
-}
+type ImageInput = Omit<ImageModel, '_id' | 'uploadedAt'>
 
 export class ImageEntity implements MongoDocument {
   public _id: string
-  public id: string
   public uploadedAt: Date
   public locationName: string
   public region: string
@@ -32,10 +19,16 @@ export class ImageEntity implements MongoDocument {
     position: { x: number; y: number }
   }[]
   public data: string
+  public productId?: string
+  public productType?: string
+  public productName?: string
+  public productRegion?: string
+  public imageId: string
+  public imageUrl: string
 
   constructor(image: ImageModel) {
     this._id = image._id
-    this.id = image.id
+
     this.uploadedAt = image.uploadedAt
     this.locationName = image.locationName
     this.region = image.region
@@ -43,6 +36,13 @@ export class ImageEntity implements MongoDocument {
     this.tags = image.tags
     this.objects = image.objects
     this.data = image.data
+
+    this.productId = image.productId
+    this.productType = image.productType
+    this.productName = image.productName
+    this.productRegion = image.productRegion
+    this.imageId = image.imageId
+    this.imageUrl = image.imageUrl
   }
 
   public static of(image: ImageModel) {
@@ -51,8 +51,7 @@ export class ImageEntity implements MongoDocument {
 
   public static ofNew(obj: ImageInput): ImageEntity {
     return new ImageEntity({
-      _id: new ObjectId().toHexString(),
-      id: randomUUID(),
+      _id: randomUUID(),
       uploadedAt: new Date(),
       ...obj,
     })
