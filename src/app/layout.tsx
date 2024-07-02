@@ -29,7 +29,12 @@ export default function RootLayout({
       <body>
         <MantineProvider theme={theme}>
           <ImagesProvider>
-            <Container maw={385} size="responsive" p={0}>
+            <Container
+              maw={385}
+              size="responsive"
+              p={0}
+              style={{ position: 'relative' }}
+            >
               <Container>
                 <ServiceNameHeader />
               </Container>
