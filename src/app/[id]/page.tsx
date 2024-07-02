@@ -39,7 +39,6 @@ export default function ImageDetailPage(props: Props) {
   return (
     <>
       <ProductHeader />
-
       <ResourceInfoCard
         imageUrl={dummyResource.imageUrl}
         title={dummyResource.title}
@@ -47,6 +46,10 @@ export default function ImageDetailPage(props: Props) {
         region={dummyResource.region}
         resourceType={dummyResource.resourceType}
       />
+
+      <Text lineClamp={2} color="#2A2A2A" fz={16} mt={4}>
+        {`"${dummyResource.info}"`}
+      </Text>
       <ProductListing />
       <MoreImages images={dummyImages} />
       <Space h={28} />
@@ -71,7 +74,7 @@ function ResourceInfoCard({
   resourceType,
 }: ResourceInfoCardProps) {
   return (
-    <Flex justify="center" align="center" py={5} px={10}>
+    <Flex justify="center" align="center" py={10} px={10}>
       {/* 1st column - Image */}
       <Container flex={1} w={80} h={80} miw={80} mih={80} p={0}>
         <Image
@@ -88,9 +91,6 @@ function ResourceInfoCard({
       <Flex flex={3} direction="column" p={10}>
         <Text lineClamp={1} color="#2A2A2A" fz={16} fw="bold" mb={0}>
           {title}
-        </Text>
-        <Text lineClamp={1} color="#2A2A2A" fz={12} mb={0}>
-          {info}
         </Text>
         <Text lineClamp={1} color="#8C8C8C" fz={12}>
           {toDotSeparatedString([
