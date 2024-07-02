@@ -6,3 +6,6 @@ export const RECOMMENDATION_V2_URL =
   'https://triple-recommendation-v2.proxy.triple-dev.titicaca-corp.com'
 export const TNA_V2_URL =
   process.env.TNA_V2_URL || 'https://tna-v2-internal.proxy.dev.triple.zone'
+export const GRAPHQL_API_URL_BASE =
+  process.env.GRAPHQL_API_URL_BASE ||
+  'http://graphql-gateway.proxy.triple-dev.titicaca-corp.com'

@@ -37,6 +37,28 @@ async function findRecommendedTnaProductIds({
   return tnaIds
 }
 
+async function findRecommendedPoiImages(regionId: string) {
+  const { images } = await fetchRecommendationV2<{
+    images: { imageUrl: string; resourceId: string }[]
+  }>(`/recommendations/images`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      geotag: {
+        id: regionId,
+        type: 'triple-region',
+      },
+      poiType: 'attraction',
+      resourceType: 'poi',
+    }),
+  })
+
+  return images
+}
+
 export const recommendationV2Client = {
   findRecommendedTnaProductIds,
+  findRecommendedPoiImages,
 }
