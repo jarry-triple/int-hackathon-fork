@@ -51,9 +51,77 @@ export default function ImageDetailPage(props: Props) {
         {`"${dummyResource.info}"`}
       </Text>
       <ProductListing />
+      <FlightList regionName={dummyResource.region.name} />
       <MoreImages images={dummyImages} />
       <Space h={28} />
     </>
+  )
+}
+
+function FlightList({ regionName }: { regionName: string }) {
+  return (
+    <div>
+      <Text
+        lineClamp={1}
+        color="#2A2A2A"
+        fz={16}
+        fw="bold"
+        mb={0}
+        style={{ marginTop: '20px' }}
+      >
+        {regionName} 최저가 항공권
+      </Text>
+      <Flex
+        style={{
+          marginTop: '5px',
+          gap: '1rem',
+          overflowX: 'auto',
+          padding: '5px 0',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {Array.from({ length: 5 }).map((_, index) => (
+          <FlightItem key={index} />
+        ))}
+      </Flex>
+    </div>
+  )
+}
+
+function FlightItem() {
+  return (
+    <div
+      style={{
+        border: '1px solid #EBEBEB',
+        borderRadius: '8px',
+        padding: '1.2rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        minWidth: '280px',
+      }}
+    >
+      <Text lineClamp={1} fz={16} c="#2A2A2A">
+        7월 11일(목) - 7월 16일(화), 5박
+      </Text>
+      <Flex justify="space-between" align="center">
+        <Image
+          w={24}
+          h={24}
+          alt="대한항공 로고"
+          src="https://i.namu.wiki/i/ohrnViDOm6XmRP0itB8kb_StEPqqBund8PuWfRBl2fpUor-ImK0vE_cVStXQN04bezUdam_4vqKpBtqoA61nrg.webp"
+        />
+
+        <Flex justify="end" align="center" gap={6}>
+          <Text fz={12} c="#8C8C8C">
+            직항
+          </Text>
+          <Text fz={16} fw="bold" c="#2A2A2A">
+            107,800원
+          </Text>
+        </Flex>
+      </Flex>
+    </div>
   )
 }
 
