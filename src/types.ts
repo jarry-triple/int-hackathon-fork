@@ -16,7 +16,7 @@ export type LLMImage = {
     }
   }[]
   data: string
-  imageUrl: string
+  imageUrl?: string
 }
 
 export type ImageModel = {
