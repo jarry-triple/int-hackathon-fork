@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { extractDataFromImageLLM } from '~/clients/image.client'
 import { imageRepository } from '~/image/image.repository'
 import { client } from '~/clients/mongo.client'
@@ -48,5 +48,27 @@ export async function POST(req: Request) {
     return NextResponse.json('Error processing the image', { status: 500 })
   } finally {
     await client.close()
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    await client.connect()
+
+    const queries = req.nextUrl.searchParams
+    const idsQuery = queries.get('ids')
+
+    const ids = idsQuery ? idsQuery.split(',') : []
+
+    const result = await imageRepository.find({
+      _id: { $in: ids },
+    })
+
+    return NextResponse.json(result, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+  } catch (error) {
+    console.error('Error fetching images:', error)
+    return NextResponse.json('Error fetching images', { status: 500 })
   }
 }
