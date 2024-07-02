@@ -144,8 +144,8 @@ export function RecommendPage() {
           </Box>
         ) : (
           <Grid gutter="xs">
-            {similarImages.map((image) => (
-              <Grid.Col span={6}>
+            {similarImages.map((image, index) => (
+              <Grid.Col key={index} span={6}>
                 <ImageItem id={image._id} url={image.imageUrl} />
               </Grid.Col>
             ))}

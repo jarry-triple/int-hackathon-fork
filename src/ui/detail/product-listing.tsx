@@ -41,9 +41,9 @@ export function ProductListing() {
 
       const productList = response.data
       const productListWithTnaThird = [
-        ...productList.slice(0, 2),
+        ...productList.slice(0, 1),
         tnaRes.data[0],
-        ...productList.slice(2),
+        ...productList.slice(1),
       ]
       setProducts(productListWithTnaThird)
     })()
@@ -77,7 +77,7 @@ export function ProductListing() {
             name={product.name}
             image={product.image.sizes.small_square.url ?? ''}
             type={product.type}
-            isAd={index === 2}
+            isAd={index === 1}
           />
         ))}
       </Flex>
@@ -131,7 +131,7 @@ function ProductItem({ id, image, name, type, isAd }: ProductItemProps) {
       <Text lineClamp={1} color="#2A2A2A" fz={14} fw="bold" mb={0} mt={4}>
         {name.length > 10 ? `${name.slice(0, 10)}...` : name}
       </Text>
-      <Text lineClamp={1} color="#8C8C8C" fz={10} mb={0} mt={8}>
+      <Text lineClamp={1} color="#8C8C8C" fz={10} mb={0} mt={2}>
         {toReadableResourceType(type)}
       </Text>
     </div>
