@@ -7,7 +7,6 @@ import ProductHeader from '~/ui/detail/product-header/ProductHeader'
 import { useHover } from '@mantine/hooks'
 import { useRouter } from 'next/navigation'
 import MoreImages from '~/ui/detail/more-images/MoreImages'
-import LocalItems from '~/ui/detail/local-items/LocalItems'
 import { v4 as uuid } from 'uuid'
 
 type Props = {
@@ -91,7 +90,6 @@ export default function ImageDetailPage(props: Props) {
       <ProductListing productList={dummyProductList}></ProductListing>
       <MoreImages images={dummyImages} />
       <Space h={28} />
-      <LocalItems products={dummyProductList as any} />
     </>
   )
 }
