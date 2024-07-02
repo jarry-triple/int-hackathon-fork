@@ -37,3 +37,6 @@ next-env.d.ts
 
 # IDE
 .idea
+
+debug.json
+image-urls.json
