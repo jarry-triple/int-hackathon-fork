@@ -1,10 +1,11 @@
 'use client'
 import { Button, FileButton, Flex, Grid } from '@mantine/core'
 import { ImageItem } from '~/ui/detail/ImageItem'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useImagesContext } from '~/contexts/images-context'
 import { useRouter } from 'next/navigation'
 import { v4 as uuid } from 'uuid'
+import axios from 'axios'
 
 // TODO: 이미지 사이 gap 좀 줄이기..
 export function ImageListing({
@@ -44,8 +45,36 @@ function ImageListingWithAddButton({
     [images],
   )
 
-  // TODO: 작업 추가 필요
   const [file, setFile] = useState<File | null>()
+
+  useEffect(() => {
+    const fetchLLMImage = async () => {
+      if (!file) {
+        return
+      }
+
+      console.log('file', file)
+
+      // Create a new FormData instance
+      const formData = new FormData()
+      formData.append('file', file)
+
+      try {
+        // Send the formData with axios
+        const response = await axios.post('/api/images', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+
+        console.log(response)
+      } catch (error) {
+        console.error('Error uploading the image:', error)
+      }
+    }
+
+    fetchLLMImage()
+  }, [file])
 
   return (
     <Flex>
