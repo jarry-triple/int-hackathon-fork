@@ -18,8 +18,8 @@ export const TARGET_REGIONS: (Geotag & { name: string })[] = [
   },
   {
     type: 'triple-region',
-    id: '23c5965b-01ad-486b-a694-a2ced15f245c',
-    name: '도쿄',
+    id: '71476976-cf9a-4ae8-a60f-76e6fb26900d',
+    name: '오사카',
   },
   {
     type: 'trip-region',
