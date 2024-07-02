@@ -22,7 +22,7 @@ export function ImageListing({
     <Grid gutter="xs">
       {images.map((image, index) => (
         <Grid.Col key={index} span={6}>
-          <ImageItem id={uuid()} image={image} />
+          <ImageItem id={uuid()} url={image} />
         </Grid.Col>
       ))}
     </Grid>

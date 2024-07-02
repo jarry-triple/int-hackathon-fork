@@ -1,6 +1,5 @@
 'use client'
 
-import { ImageListing } from '~/ui/detail/ImageListing'
 import { IconSearch } from '@tabler/icons-react'
 import {
   ActionIcon,
@@ -12,6 +11,7 @@ import {
   Center,
   LoadingOverlay,
   Box,
+  Grid,
 } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { useDisclosure } from '@mantine/hooks'
@@ -19,6 +19,7 @@ import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import axios from 'axios'
 import { ImageModel } from '../../types'
+import { ImageItem } from './ImageItem'
 
 export function RecommendPage() {
   const [opened, { open, close }] = useDisclosure()
@@ -142,10 +143,13 @@ export function RecommendPage() {
             </Center>
           </Box>
         ) : (
-          <ImageListing
-            images={similarImages.map((img) => img.imageUrl)}
-            showAddButton={false}
-          />
+          <Grid gutter="xs">
+            {similarImages.map((image) => (
+              <Grid.Col span={6}>
+                <ImageItem id={image._id} url={image.imageUrl} />
+              </Grid.Col>
+            ))}
+          </Grid>
         )}
       </div>
     </Container>

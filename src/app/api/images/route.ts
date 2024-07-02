@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { extractDataFromImageLLM } from '~/clients/image.client'
 import { imageRepository } from '~/image/image.repository'
-import { ImageEntity } from '~/image/image.entity'
 import { client } from '~/clients/mongo.client'
 
 export async function POST(req: Request) {

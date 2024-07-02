@@ -8,11 +8,11 @@ import { IconFork } from '../icons/fork'
 
 interface ImageItemProps {
   id: string
-  image?: string
+  url?: string
   showForkButton?: boolean
 }
 
-export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
+export function ImageItem({ id, url, showForkButton }: ImageItemProps) {
   const router = useRouter()
   const { hovered, ref } = useHover<HTMLImageElement>()
   const [forked, setForked] = useState(false)
@@ -32,7 +32,7 @@ export function ImageItem({ id, image, showForkButton }: ImageItemProps) {
         onClick={() => router.push(`/${id}`)}
         alt="image"
         radius="lg"
-        src={image}
+        src={url}
         height={217}
         width={153}
         fallbackSrc="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-6.png"
