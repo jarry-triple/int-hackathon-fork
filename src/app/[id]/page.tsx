@@ -144,10 +144,10 @@ function ResourceInfoCard({
   return (
     <Flex justify="center" align="center" py={10} px={10}>
       {/* 1st column - Image */}
-      <Container flex={1} w={80} h={80} miw={80} mih={80} p={0}>
+      <Container flex={1} w={64} h={64} miw={64} mih={64} p={0}>
         <Image
-          w={80}
-          h={80}
+          w={64}
+          h={64}
           alt="이미지"
           radius="md"
           fit="cover"
