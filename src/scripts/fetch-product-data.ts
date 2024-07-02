@@ -1,30 +1,30 @@
 import { recommendationV2Client } from '~/clients/recommendation-v2.client'
 import { tnaV2Client } from '~/clients/tna-v2.client'
+import { TARGET_REGIONS } from '~/utils/fixtures'
 
 const fs = require('fs')
 
 async function run() {
   console.log('TNA 데이터를 불러옵니다.')
 
-  const productIds = await recommendationV2Client.findRecommendedTnaProductIds({
-    from: 0,
-    size: 20,
-    geotags: [
-      {
-        id: '71476976-cf9a-4ae8-a60f-76e6fb26900d',
-        type: 'triple-region',
-      },
-    ],
-  })
+  for (const geotag of TARGET_REGIONS) {
+    console.log(`지역: ${geotag.name} / ${geotag.id})`)
+    const productIds =
+      await recommendationV2Client.findRecommendedTnaProductIds({
+        from: 0,
+        size: 20,
+        geotags: [geotag],
+      })
 
-  const result = await tnaV2Client.mgetProducts(productIds)
+    const result = await tnaV2Client.mgetProducts(productIds)
 
-  saveResult(result)
+    saveResult(geotag.name, result)
+  }
 }
 
-function saveResult(result: any) {
+function saveResult(target: string, result: any) {
   const dir = 'out'
-  const filename = `result-${new Date().toISOString()}.json`
+  const filename = `${target}-result-${new Date().toISOString()}.json`
 
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
