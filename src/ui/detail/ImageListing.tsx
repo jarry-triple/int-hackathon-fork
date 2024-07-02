@@ -15,13 +15,6 @@ export function ImageListing({
   images: (string | undefined)[]
   showAddButton: boolean
 }) {
-  const { selectedImages } = useImagesContext()
-  const router = useRouter()
-
-  if (selectedImages.length === 3) {
-    router.push('/recommend')
-  }
-
   return showAddButton ? (
     <ImageListingWithAddButton images={images} />
   ) : (
@@ -40,6 +33,15 @@ function ImageListingWithAddButton({
 }: {
   images: (string | undefined)[]
 }) {
+  const { selectedImages } = useImagesContext()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (selectedImages.length === 3) {
+      router.push('/recommend')
+    }
+  }, [selectedImages, router])
+
   const [leftImages, rightImages] = useMemo(
     () => [0, 1].map((v) => images.filter((_, i) => i % 2 === v)),
     [images],
