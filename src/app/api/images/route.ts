@@ -19,10 +19,29 @@ export async function POST(req: Request) {
       return new NextResponse('Error processing the image', { status: 500 })
     }
 
-    const imageEntity = ImageEntity.ofNew(imageFromLLM)
-    await imageRepository.insertOne(imageEntity)
+    const agg = await imageRepository.aggregate([
+      {
+        $addFields: {
+          intersection: {
+            $size: {
+              $setIntersection: ['$tags', imageFromLLM.tags],
+            },
+          },
+        },
+      },
+      {
+        $match: {
+          intersection: { $gte: 3 },
+        },
+      },
+      {
+        $sort: {
+          intersection: -1,
+        },
+      },
+    ])
 
-    return NextResponse.json(JSON.stringify(imageFromLLM), {
+    return NextResponse.json(agg, {
       headers: { 'Content-Type': 'application/json' },
     })
   } catch (error) {

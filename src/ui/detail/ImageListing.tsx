@@ -1,11 +1,12 @@
 'use client'
-import { Button, FileButton, Flex, Grid } from '@mantine/core'
+import { Button, FileButton, Flex, Grid, Image } from '@mantine/core'
 import { ImageItem } from '~/ui/detail/ImageItem'
 import { useEffect, useMemo, useState } from 'react'
 import { useImagesContext } from '~/contexts/images-context'
 import { useRouter } from 'next/navigation'
 import { v4 as uuid } from 'uuid'
 import axios from 'axios'
+import { ImageModel } from '../../types'
 
 // TODO: 이미지 사이 gap 좀 줄이기..
 export function ImageListing({
@@ -46,6 +47,7 @@ function ImageListingWithAddButton({
   )
 
   const [file, setFile] = useState<File | null>()
+  const [similarImages, setSimilarImages] = useState<ImageModel[]>([])
 
   useEffect(() => {
     const fetchLLMImage = async () => {
@@ -59,13 +61,17 @@ function ImageListingWithAddButton({
 
       try {
         // Send the formData with axios
-        const response = await axios.post('/api/images', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
+        const response = await axios.post<ImageModel[]>(
+          '/api/images',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           },
-        })
+        )
 
-        console.log(response)
+        setSimilarImages(response.data)
       } catch (error) {
         console.error('Error uploading the image:', error)
       }
@@ -76,14 +82,36 @@ function ImageListingWithAddButton({
 
   return (
     <Flex>
-      <Grid style={{ paddingRight: '15px' }}>
+      <FileButton accept="image/*" onChange={setFile}>
+        {(props) => (
+          <Button
+            {...props}
+            size="xl"
+            variant="default"
+            style={{
+              fontSize: '15px',
+              color: '#8C8C8C',
+              fontWeight: '300',
+              width: '100%',
+            }}
+            radius="md"
+          >
+            + 직접 등록
+          </Button>
+        )}
+      </FileButton>
+      {/* <Grid style={{ paddingRight: '15px' }}>
         {leftImages.map((image, index) => (
           <Grid.Col key={index} span={12}>
             <ImageItem id={uuid()} image={image} showForkButton={true} />
           </Grid.Col>
         ))}
-      </Grid>
-      <Grid>
+      </Grid> */}
+
+      {similarImages.map((image) => (
+        <Image key={image._id} src={image.imageUrl} />
+      ))}
+      {/* <Grid>
         <Grid.Col>
           <FileButton accept="image/*" onChange={setFile}>
             {(props) => (
@@ -115,7 +143,7 @@ function ImageListingWithAddButton({
             />
           </Grid.Col>
         ))}
-      </Grid>
+      </Grid> */}
     </Flex>
   )
 }
