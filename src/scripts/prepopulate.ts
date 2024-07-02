@@ -18,14 +18,17 @@ type Criteria = {
 }
 
 type ProductImage = {
-  regionName: string
+  id: string
   url: string
-  poiType: string
+  productName: string
+  productType: string
+  productRegion: string
+  productId: string // only for SEED DATA
 }
 
 type LLMImage = {
   locationName: string // should be precise name for the location. (e.g. 'Eiffel Tower' instead of 'tower'). should be in korean
-  region: string // if region is not one of '제주', '오사카', '바르셀로나', '다낭', '파리' it should be 'etc'
+  region: string // if region is not one of '제주', '오사카', '바르셀로나', '다낭', '파리', otherwise it should be 'etc'.
   locationSummary: string // location summary should provide brief description of the location in korean language only. Must be always full sentence.
   tags: string[] // Tags should include keywords for location. Later used for image similarity search. Tags must be provided in Korean.
   objects: {
@@ -41,10 +44,17 @@ type LLMImage = {
     }
   }[]
   data: string
+
+  productId?: string
+  productType?: string
+  productName?: string
+  productRegion?: string
+  imageId: string
+  imageUrl: string
 }
 
-type ImageEntity = {
-  id: string
+type ImageModel = {
+  _id: string
   uploadedAt: Date
 } & LLMImage
 
@@ -120,11 +130,9 @@ async function run() {
       return true
     })
 
-    fs.writeFileSync(
-      './response.json',
-      JSON.stringify(imageEntities, null, 2),
-      'utf-8',
-    )
+    const database = client.db('knk')
+    const imageCollection = database.collection('images')
+    await imageCollection.insertMany(imageEntities as any)
 
     // db insert
   } catch (e) {
@@ -136,16 +144,18 @@ async function run() {
 
 run().catch(console.dir)
 
-function mapToImageEntity(image: LLMImage): ImageEntity {
+function mapToImageEntity(image: LLMImage): ImageModel {
+  const _id = randomUUID()
+  console.log('id', _id)
   return {
-    id: randomUUID() as string,
+    _id,
     uploadedAt: new Date(),
     ...image,
   }
 }
 
 async function fetchFromLLMModel(
-  poiImages: ProductImage[],
+  productImages: ProductImage[],
 ): Promise<LLMImage[]> {
   const client = new AzureOpenAI({
     endpoint: AZURE_OPENAI_ENDPOINT,
@@ -157,7 +167,7 @@ async function fetchFromLLMModel(
   const responses: LLMImage[] = []
 
   try {
-    for (const poiImage of poiImages) {
+    for (const poiImage of productImages) {
       const base64ImageString = await convertImageToBase64({
         type: 'url',
         value: poiImage.url,
@@ -200,12 +210,25 @@ async function fetchFromLLMModel(
         console.log('item', {
           ...(cleanedGeneral as unknown as LLMImage),
           tags: cleanedTags.split(',').map((tag) => tag.trim()),
+          productId: poiImage.productId,
+          productName: poiImage.productName,
+          productRegion: poiImage.productRegion,
+          productType: poiImage.productType,
+          imageId: poiImage.id,
+          imageUrl: poiImage.url,
         })
+
         try {
           responses.push({
             ...(cleanedGeneral as unknown as LLMImage),
             tags: cleanedTags.split(',').map((tag) => tag.trim()),
             data: base64ImageString,
+            productId: poiImage.productId,
+            productName: poiImage.productName,
+            productRegion: poiImage.productRegion,
+            productType: poiImage.productType,
+            imageId: poiImage.id,
+            imageUrl: poiImage.url,
           })
         } catch (e) {
           console.error('Error parsing response:', e)
@@ -233,12 +256,16 @@ async function fetchFromProducts(regionName: string): Promise<ProductImage[]> {
     .toArray()
 
   imageUrls.push(
-    ...products.flatMap((p) => {
+    ...products.map<ProductImage>((p) => {
       return {
+        id: p.image.id,
         url: p.image.sizes.large.url,
-        regionName: regionName,
-        poiName: p.name,
-        poiType: 'attraction',
+
+        productType: p.type,
+        productName: p.name,
+        productRegion: regionName,
+        // @ts-ignore
+        productId: p._id as string,
       }
     }),
   )
