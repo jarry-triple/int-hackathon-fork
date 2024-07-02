@@ -23,13 +23,15 @@
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
-    "tabler": "^1.0.0-alpha.8"
+    "tabler": "^1.0.0-alpha.8",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@titicaca/prettier-config-triple": "^1.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
     "@vanilla-extract/css": "^1.15.3",
     "@vanilla-extract/next-plugin": "^2.4.3",
     "eslint": "^8",

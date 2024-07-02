@@ -8,6 +8,7 @@ import { useHover } from '@mantine/hooks'
 import { useRouter } from 'next/navigation'
 import MoreImages from '~/ui/detail/more-images/MoreImages'
 import LocalItems from '~/ui/detail/local-items/LocalItems'
+import { v4 as uuid } from 'uuid'
 
 type Props = {
   params: {
@@ -28,25 +29,25 @@ const dummyResource = {
 
 const dummyProductList: ProductItemProps[] = [
   {
-    id: '1',
+    id: uuid(),
     image: 'https://via.placeholder.com/150',
     title: '제목1',
     type: '맛집',
   },
   {
-    id: '2',
+    id: uuid(),
     image: 'https://via.placeholder.com/150',
     title: '제목2',
     type: '숙소',
   },
   {
-    id: '3',
+    id: uuid(),
     image: 'https://via.placeholder.com/150',
     title: '제목3',
     type: '액티비티',
   },
   {
-    id: '4',
+    id: uuid(),
     image: 'https://via.placeholder.com/150',
     title: '제목4',
     type: '놀이공원',

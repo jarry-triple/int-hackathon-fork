@@ -4,6 +4,7 @@ import { ImageItem } from '~/ui/detail/ImageItem'
 import { useMemo, useState } from 'react'
 import { useImagesContext } from '~/contexts/images-context'
 import { useRouter } from 'next/navigation'
+import { v4 as uuid } from 'uuid'
 
 // TODO: 이미지 사이 gap 좀 줄이기..
 export function ImageListing({
@@ -26,7 +27,7 @@ export function ImageListing({
     <Grid gutter="xs">
       {images.map((image, index) => (
         <Grid.Col key={index} span={6}>
-          <ImageItem id={index.toString()} image={image} />
+          <ImageItem id={uuid()} image={image} />
         </Grid.Col>
       ))}
     </Grid>
@@ -81,7 +82,7 @@ function ImageListingWithAddButton({
           <Grid.Col key={index} span={12}>
             <ImageItem
               key={index}
-              id={index.toString()}
+              id={uuid()}
               image={image}
               showForkButton={true}
             />
@@ -90,14 +91,4 @@ function ImageListingWithAddButton({
       </Grid>
     </Flex>
   )
-}
-
-export function uuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-    .replace(/[xy]/g, function (c) {
-      var r = (Math.random() * 16) | 0
-      var v = c === 'x' ? r : (r & 0x3) | 0x8
-      return v.toString(16)
-    })
-    .toUpperCase()
 }
