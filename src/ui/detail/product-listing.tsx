@@ -39,7 +39,6 @@ export function ProductListing() {
         },
       )
 
-      const tna = response.data[0]
       const productList = response.data
       const productListWithTnaThird = [
         ...productList.slice(0, 2),
