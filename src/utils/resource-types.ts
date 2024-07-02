@@ -1,5 +1,10 @@
 export type PoiType = 'attraction' | 'restaurant' | 'hotel'
 export type ResourceType = PoiType | 'tna'
+export const RESOURCE_TYPES = ['attraction', 'restaurant', 'hotel', 'tna']
+
+export function isResourceType(type: string): type is ResourceType {
+  return RESOURCE_TYPES.includes(type)
+}
 
 export function toReadableResourceType(resourceType: ResourceType): string {
   switch (resourceType) {

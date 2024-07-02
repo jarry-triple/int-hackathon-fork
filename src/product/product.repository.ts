@@ -1,20 +1,31 @@
 import { BaseMongoRepository } from '~/clients/mongo.client'
 import { ProductEntity, ProductInput } from '~/product/product.entity'
+import { ResourceType } from '~/utils/resource-types'
 
 export class ProductRepository extends BaseMongoRepository<ProductEntity> {
   public constructor() {
-    super({ collection: 'products' }, ProductEntity)
+    super({ database: 'knk', collection: 'products' }, ProductEntity)
   }
 
   public findProducts({
     from,
     size,
+    type,
+    geotagName,
+    onlyPoiType,
   }: {
     from: number
     size: number
+    type?: ResourceType
+    geotagName?: string
+    onlyPoiType?: boolean
   }): Promise<ProductEntity[]> {
     return this.find(
-      {},
+      {
+        ...(type && { type }),
+        ...(geotagName && { 'geotag.name': geotagName }),
+        ...(onlyPoiType && { type: { $ne: 'tna' } }),
+      },
       { sort: { createdAt: -1 }, skip: from, ...(size > 0 && { limit: size }) },
     )
   }

@@ -30,10 +30,32 @@ export class ProductEntity implements MongoDocument {
       updatedAt: input.updatedAt || new Date(),
     })
   }
+
+  public toView(): ProductView {
+    return {
+      _id: this._id,
+      type: this.type,
+      name: this.name,
+      geotag: this.geotag,
+      image: this.image,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    }
+  }
 }
 
 export interface ProductInput {
   _id?: string
+  type: ResourceType
+  name: string
+  geotag: Geotag & { name?: string }
+  image: Image
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+export interface ProductView {
+  _id: string
   type: ResourceType
   name: string
   geotag: Geotag & { name?: string }
