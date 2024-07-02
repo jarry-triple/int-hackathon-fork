@@ -26,8 +26,8 @@ export class ProductEntity implements MongoDocument {
     return new ProductEntity({
       ...input,
       _id: input._id || uuid(),
-      createdAt: input.createdAt!,
-      updatedAt: input.updatedAt!,
+      createdAt: input.createdAt || new Date(),
+      updatedAt: input.updatedAt || new Date(),
     })
   }
 }
