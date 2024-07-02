@@ -1,14 +1,5 @@
 'use client'
-import {
-  Button,
-  Container,
-  Flex,
-  Image,
-  Space,
-  Text,
-  Title,
-  TypographyStylesProvider,
-} from '@mantine/core'
+import { Button, Container, Flex, Image, Space, Text } from '@mantine/core'
 
 import { ResourceType, toReadableResourceType } from '~/utils/resource-types'
 import { toDotSeparatedString } from '~/utils/string-utils'
@@ -78,17 +69,15 @@ export default function ImageDetailPage(props: Props) {
     <>
       <ProductHeader />
 
-      <TypographyStylesProvider>
-        <ResourceInfoCard
-          imageUrl={dummyResource.imageUrl}
-          title={dummyResource.title}
-          info={dummyResource.info}
-          region={dummyResource.region}
-          resourceType={dummyResource.resourceType}
-        />
-        <ProductListing productList={dummyProductList}></ProductListing>
-        <MoreImages images={dummyImages} />
-      </TypographyStylesProvider>
+      <ResourceInfoCard
+        imageUrl={dummyResource.imageUrl}
+        title={dummyResource.title}
+        info={dummyResource.info}
+        region={dummyResource.region}
+        resourceType={dummyResource.resourceType}
+      />
+      <ProductListing productList={dummyProductList}></ProductListing>
+      <MoreImages images={dummyImages} />
       <Space h={28} />
       <LocalItems products={dummyProductList as any} />
     </>
