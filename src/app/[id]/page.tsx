@@ -30,27 +30,38 @@ const dummyResource = {
 const dummyProductList: ProductItemProps[] = [
   {
     id: uuid(),
-    image: 'https://via.placeholder.com/150',
-    title: '제목1',
+    image:
+      'https://images.pexels.com/photos/3667564/pexels-photo-3667564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    name: '제목1',
     type: '맛집',
   },
   {
     id: uuid(),
-    image: 'https://via.placeholder.com/150',
-    title: '제목2',
+    image:
+      'https://images.pexels.com/photos/3667564/pexels-photo-3667564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    name: '제목2',
     type: '숙소',
   },
   {
     id: uuid(),
-    image: 'https://via.placeholder.com/150',
-    title: '제목3',
+    image:
+      'https://images.pexels.com/photos/3667564/pexels-photo-3667564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    name: '제목3',
     type: '액티비티',
   },
   {
     id: uuid(),
-    image: 'https://via.placeholder.com/150',
-    title: '제목4',
+    image:
+      'https://images.pexels.com/photos/3667564/pexels-photo-3667564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    name: '제목4',
     type: '놀이공원',
+  },
+  {
+    id: uuid(),
+    image:
+      'https://images.pexels.com/photos/3667564/pexels-photo-3667564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    name: '제목5',
+    type: '액티비티',
   },
 ]
 
@@ -150,9 +161,10 @@ function ResourceInfoCard({
 
 interface ProductItemProps {
   id: string
-  image?: string
-  title: string
+  image: string
+  name: string
   type: string
+  isAd?: boolean
 }
 
 interface ProductListingProps {
@@ -176,7 +188,7 @@ function ProductListing({ productList }: ProductListingProps) {
       <Flex
         style={{
           marginTop: '5px',
-          gap: '10px',
+          gap: '2px',
           overflowX: 'auto',
           padding: '5px 0',
           whiteSpace: 'nowrap',
@@ -186,9 +198,10 @@ function ProductListing({ productList }: ProductListingProps) {
           <ProductItem
             key={index}
             id={product.id}
+            name={product.name}
             image={product.image}
-            title={product.title}
             type={product.type}
+            isAd={index === 2}
           />
         ))}
       </Flex>
@@ -196,7 +209,7 @@ function ProductListing({ productList }: ProductListingProps) {
   )
 }
 
-function ProductItem({ id, image, title, type }: ProductItemProps) {
+function ProductItem({ id, image, name, type, isAd }: ProductItemProps) {
   const router = useRouter()
   const { hovered, ref } = useHover<HTMLDivElement>()
 
@@ -205,30 +218,42 @@ function ProductItem({ id, image, title, type }: ProductItemProps) {
       ref={ref}
       style={{
         position: 'relative',
-        width: '100px',
-        height: '100%',
         cursor: 'pointer',
         borderRadius: '8px',
         backgroundColor: hovered ? '#f0f0f0' : '#ffffff', // placeholder background color
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        padding: '4px',
       }}
       onClick={() => router.push(`/${id}`)} // TODO: link to product detail page
     >
-      <Image
-        onClick={() => router.push(`/${id}`)}
-        alt="product image"
-        radius="md"
-        src={image}
-        height={90}
-        width={90}
-        fallbackSrc="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-6.png"
-      />
-      <Text lineClamp={1} color="#2A2A2A" fz={12} fw="bold" mb={0}>
-        {title}
+      {isAd && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '5px',
+            right: '5px',
+            marginRight: '3px',
+            marginTop: '3px',
+            color: '#FFFFFF',
+            padding: '0px 3px',
+            borderRadius: '4px 4px 4px 4px',
+            border: '1px solid #FFFFFF',
+            fontSize: '8px',
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Ad
+        </div>
+      )}
+      <Image alt="product image" radius="md" src={image} h={100} w={100} />
+      <Text lineClamp={1} color="#2A2A2A" fz={14} fw="bold" mb={0} mt={-4}>
+        {name}
       </Text>
-      <Text lineClamp={1} color="#8C8C8C" fz={10}>
+      <Text lineClamp={1} color="#8C8C8C" fz={10} mb={0} mt={-8}>
         {type}
       </Text>
     </div>
