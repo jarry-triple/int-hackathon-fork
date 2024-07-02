@@ -16,10 +16,10 @@ export type LLMImage = {
     }
   }[]
   data: string
+  imageUrl: string
 }
 
 export type ImageModel = {
   _id: string
-  id: string
   uploadedAt: Date
 } & LLMImage
