@@ -73,6 +73,7 @@ const MoreImages: FunctionComponent<Props> = ({ image }) => {
           <ImageListing
             images={similarImages.map((image) => image.imageUrl)}
             showAddButton={false}
+            clickable={false}
           />
         )}
       </Box>
