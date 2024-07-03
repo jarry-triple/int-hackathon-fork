@@ -48,11 +48,11 @@ function ImageListingWithAddButton({
   const { selectedImages, setTags } = useImagesContext()
   const router = useRouter()
 
-  useEffect(() => {
-    if (selectedImages.length === 3) {
-      router.push('/recommend')
-    }
-  }, [selectedImages, router])
+  // useEffect(() => {
+  //   if (selectedImages.length === 3) {
+  //     router.push('/recommend')
+  //   }
+  // }, [selectedImages, router])
 
   const [file, setFile] = useState<File | null>()
   const [similarImages, setSimilarImages] = useState<ImageModel[]>([])
