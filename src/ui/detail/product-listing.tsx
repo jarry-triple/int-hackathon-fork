@@ -18,9 +18,8 @@ interface ProductItemProps {
 }
 
 /** 이 근처 */
-export function ProductListing() {
+export function ProductListing({ geotagName }: { geotagName: string }) {
   const [products, setProducts] = useState<ProductView[]>()
-  const geotagName = '바르셀로나'
 
   useEffect(() => {
     ;(async () => {

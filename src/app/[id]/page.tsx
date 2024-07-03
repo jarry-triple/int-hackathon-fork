@@ -34,7 +34,7 @@ export default async function ImageDetailPage({ params: { id } }: Props) {
         {`"${image.locationSummary}"`}
       </Text>
       <Space h={6} />
-      <ProductListing />
+      <ProductListing geotagName={image.region} />
       <FlightList regionName={image.region} />
       <MoreImages image={image} />
       <Space h={28} />
