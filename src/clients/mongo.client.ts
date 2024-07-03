@@ -116,7 +116,7 @@ export class BaseMongoRepository<T extends Document & { _id: string }> {
     const result = await this.db
       .collection<T>(this.collection)
       .findOne(filter, options)
-
+    console.log(result, filter)
     return result ? this.model.ofNew(result) : null
   }
 

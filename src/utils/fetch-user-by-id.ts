@@ -7,6 +7,7 @@ export const fetchImageById = async (
 ): Promise<ImageModel | undefined> => {
   try {
     await client.connect()
+    console.log('id', id)
     const image = await imageRepository.findOne({ _id: id })
 
     if (!image) {

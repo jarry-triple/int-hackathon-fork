@@ -15,8 +15,13 @@ type Props = {
 
 export default async function ImageDetailPage({ params: { id } }: Props) {
   const image = await fetchImageById(id)
+
   if (!image) {
-    throw new Error('Image not found')
+    return (
+      <div>
+        <Text>Loading...</Text>
+      </div>
+    )
   }
 
   return (

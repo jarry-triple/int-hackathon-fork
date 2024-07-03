@@ -11,7 +11,7 @@ const UserAvatar: FunctionComponent = () => {
       </Avatar>
       <Group gap="xs">
         <Text>오들오딜</Text>
-        <Text>362픽</Text>
+        <Text>362퐄</Text>
       </Group>
     </Group>
   )
