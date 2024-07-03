@@ -24,14 +24,21 @@ import { ImageItem } from './ImageItem'
 import { useImagesContext } from '~/contexts/images-context'
 
 export function RecommendPage() {
+  const { tags, similarImages: defaultSimilarImages } = useImagesContext()
+
   const [opened, { open, close }] = useDisclosure()
   const [file, setFile] = useState<File | null>()
-  const [similarImages, setSimilarImages] = useState<ImageModel[]>([])
+  const [similarImages, setSimilarImages] =
+    useState<ImageModel[]>(defaultSimilarImages)
   const [loading, setLoading] = useState(false)
-
-  const { tags } = useImagesContext()
+  const [fromDefault, setFromDefault] = useState(false)
 
   useEffect(() => {
+    if (similarImages.length > 0 && !fromDefault) {
+      setFromDefault(true)
+      return
+    }
+
     const fetchLLMImage = async () => {
       if (!file) {
         return

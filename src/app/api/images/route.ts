@@ -14,6 +14,7 @@ export async function POST(req: Request) {
     }
 
     const imageFromLLM = await extractDataFromImageLLM(file)
+
     if (!imageFromLLM) {
       return new NextResponse('Error processing the image', { status: 500 })
     }

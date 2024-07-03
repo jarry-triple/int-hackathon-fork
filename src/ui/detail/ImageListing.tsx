@@ -7,17 +7,16 @@ import {
   FileButton,
   Flex,
   Grid,
-  Image,
   LoadingOverlay,
 } from '@mantine/core'
+
 import { ImageItem } from '~/ui/detail/ImageItem'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useImagesContext } from '~/contexts/images-context'
 import { useRouter } from 'next/navigation'
 import { v4 as uuid } from 'uuid'
 import axios from 'axios'
 import { ImageModel } from '../../types'
-import { imageRepository } from '~/image/image.repository'
 
 // TODO: 이미지 사이 gap 좀 줄이기..
 export function ImageListing({
@@ -45,7 +44,7 @@ function ImageListingWithAddButton({
 }: {
   images: (string | undefined)[]
 }) {
-  const { selectedImages, setTags } = useImagesContext()
+  const { selectedImages, setTags, setSimilarImages } = useImagesContext()
   const router = useRouter()
 
   // useEffect(() => {
@@ -55,13 +54,13 @@ function ImageListingWithAddButton({
   // }, [selectedImages, router])
 
   const [file, setFile] = useState<File | null>()
-  const [similarImages, setSimilarImages] = useState<ImageModel[]>([])
   const [leftImages, setLeftImages] = useState<string[]>([])
   const [rightImages, setRightImages] = useState<string[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchLLMImage = async () => {
+      setLoading(true)
       if (!file) {
         return
       }
@@ -83,12 +82,15 @@ function ImageListingWithAddButton({
         )
 
         setSimilarImages(response.data)
+        router.push('/recommend')
+        setLoading(false)
       } catch (error) {
         console.error('Error uploading the image:', error)
       }
     }
 
     const fetchImages = async (ids: string[]) => {
+      setLoading(true)
       const result = await axios.get(`/api/images?ids=${ids.join(',')}`)
 
       setTags(result.data.map((image: ImageModel) => image.tags).flat())
@@ -102,8 +104,9 @@ function ImageListingWithAddButton({
       setLoading(false) // Set loading to false after images are fetched
     }
 
-    setLoading(true) // Set loading to true before starting fetch
-    fetchImages(images.filter((image) => image !== undefined) as string[])
+    leftImages.length === 0 &&
+      rightImages.length === 0 &&
+      fetchImages(images.filter((image) => image !== undefined) as string[])
     fetchLLMImage()
   }, [file, images])
 
@@ -135,10 +138,6 @@ function ImageListingWithAddButton({
           </Grid.Col>
         ))}
       </Grid>
-
-      {similarImages.map((image) => (
-        <Image key={image._id} src={image.imageUrl} />
-      ))}
       <Grid>
         <Grid.Col>
           <FileButton accept="image/*" onChange={setFile}>
