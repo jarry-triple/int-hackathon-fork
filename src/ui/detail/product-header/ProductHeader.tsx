@@ -1,6 +1,6 @@
 'use client'
 
-import { BackgroundImage, Box, Group, Stack } from '@mantine/core'
+import { BackgroundImage, Box, Group, Overlay, Stack } from '@mantine/core'
 import { FunctionComponent, useState } from 'react'
 
 import UserAvatar from './UserAvatar'
@@ -24,6 +24,16 @@ const ProdutHeader: FunctionComponent<Props> = (props) => {
     }
   }
 
+  const [showOverlay, setShowOverlay] = useState(false)
+
+  const handleOverlayOpen = () => {
+    setShowOverlay(true)
+  }
+
+  const handleOverlayClose = () => {
+    setShowOverlay(false)
+  }
+
   return (
     <BackgroundImage
       src={props.image.imageUrl}
@@ -31,12 +41,17 @@ const ProdutHeader: FunctionComponent<Props> = (props) => {
       w={375}
       className={wrapper}
     >
-      <ProductBadge
-        coordinates={{
-          x: 100,
-          y: 100,
-        }}
-      />
+      {showOverlay && <Overlay backgroundOpacity={0.5} color="black" />}
+      {props.image.objects.map((object) => (
+        <ProductBadge
+          key={object.name}
+          image={props.image}
+          object={object}
+          handleOverlayClose={handleOverlayClose}
+          handleOverlayOpen={handleOverlayOpen}
+          showOverlay={showOverlay}
+        />
+      ))}
       <Stack h="100%" justify="space-between">
         <Box pt="1rem" pl="1.4rem">
           <GoBackButton />

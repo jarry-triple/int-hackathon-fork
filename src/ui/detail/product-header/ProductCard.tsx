@@ -14,14 +14,14 @@ import { ResourceType, toReadableResourceType } from '~/utils/resource-types'
 import { toDotSeparatedString } from '~/utils/string-utils'
 
 type Props = {
-  imageUrl: string
+  imageUrl?: string
   title: string
   region: { name: string }
   resourceId: string
   resourceType: ResourceType
-  rating: number
-  originalPrice: number
-  discountedPrice: number
+  rating?: number
+  originalPrice?: number
+  discountedPrice?: number
 }
 
 export const ProductCard: FunctionComponent<Props> = (props: Props) => {
@@ -35,7 +35,10 @@ export const ProductCard: FunctionComponent<Props> = (props: Props) => {
             alt="이미지"
             radius="md"
             fit="cover"
-            src={props.imageUrl}
+            src={
+              props.imageUrl ||
+              'https://i0.wp.com/sunrisedaycamp.org/wp-content/uploads/2020/10/placeholder.png?ssl=1'
+            }
           />
         </Container>
 
@@ -52,7 +55,9 @@ export const ProductCard: FunctionComponent<Props> = (props: Props) => {
             </Text>
           </Link>
 
-          <Rating value={props.rating} fractions={10} readOnly />
+          {props.rating && (
+            <Rating value={props.rating} fractions={10} readOnly />
+          )}
 
           <Text lineClamp={1} color="#8C8C8C" fz={12} pt={4}>
             {toDotSeparatedString([
@@ -62,10 +67,12 @@ export const ProductCard: FunctionComponent<Props> = (props: Props) => {
           </Text>
         </Stack>
       </Flex>
-      <Pricing
-        originalPrice={props.originalPrice}
-        discountedPrice={props.discountedPrice}
-      />
+      {props.originalPrice && props.discountedPrice && (
+        <Pricing
+          originalPrice={props.originalPrice}
+          discountedPrice={props.discountedPrice}
+        />
+      )}
     </Stack>
   )
 }

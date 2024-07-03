@@ -6,7 +6,7 @@ export type LLMImage = {
   objects: {
     name: string // should provide the name of noticeable object in the image as precise as possible. (e.g. 'Eiffel Tower' instead of 'tower'). Provide specific name if it seems to be lodge, restaurant, or attraction. (e.g. 'Hotel ABC' instead of 'hotel').
 
-    type: 'activity' | 'accomodation' | 'restaurant' | 'attraction' // type of the object. If it is not one of 'activity', 'accomodation', 'restaurant', 'attraction', otherwise the object should not be included in 'objects' array.
+    type: 'activity' | 'accomodation' | 'restaurant' | 'attraction' | 'tna' // type of the object. If it is not one of 'activity', 'accomodation', 'restaurant', 'attraction', otherwise the object should not be included in 'objects' array.
 
     tags: string[] // Tags for the object that includes keywords for the object. Later used for image similarity search. Tags must be provided in Korean
 
@@ -14,6 +14,11 @@ export type LLMImage = {
       x: number // x-axis coordinate of the object in the image. (0 <= x <= 1)
       y: number // y-axis coordinate of the object in the image. (0 <= y <= 1)
     }
+
+    ratings?: number
+    originalPrice?: number
+    discountedPrice?: number
+    imageUrl?: string
   }[]
   data: string
 

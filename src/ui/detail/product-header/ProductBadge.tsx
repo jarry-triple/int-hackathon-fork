@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Center,
   HoverCard,
   Overlay,
@@ -12,42 +13,26 @@ import { IconPlus } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
 import ProductCard from './ProductCard'
 import { badge } from './ProductBadge.css'
+import { ImageModel } from '~/types'
+import { ResourceType } from '../../../utils/resource-types'
 
 type Props = {
-  coordinates: {
-    x: number
-    y: number
-  }
+  image: ImageModel
+  object: ImageModel['objects'][0]
+  handleOverlayOpen: () => void
+  handleOverlayClose: () => void
+  showOverlay: boolean
 }
 
-const dummyResource = {
-  imageUrl:
-    'https://images.pexels.com/photos/3667564/pexels-photo-3667564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-  title: '금문교',
-  rating: 4.5,
-  region: {
-    name: '샌프란시스코',
-  },
-  resourceId: '82e32eb8-2470-4522-b61a-0ca40fd98534',
-  resourceType: 'attraction' as const,
-  originalPrice: 100000,
-  discountedPrice: 80000,
-}
-
-const ProductBadge: FunctionComponent<Props> = (props: Props) => {
-  const [showOverlay, setShowOverlay] = useState(false)
-
-  const handleOverlayOpen = () => {
-    setShowOverlay(true)
-  }
-
-  const handleOverlayClose = () => {
-    setShowOverlay(false)
-  }
-
+const ProductBadge: FunctionComponent<Props> = ({
+  image,
+  object,
+  handleOverlayClose,
+  handleOverlayOpen,
+  showOverlay,
+}) => {
   return (
     <>
-      {showOverlay && <Overlay backgroundOpacity={0.5} color="black" />}
       <HoverCard
         withArrow
         arrowSize={16}
@@ -64,10 +49,10 @@ const ProductBadge: FunctionComponent<Props> = (props: Props) => {
             circle
             color="#3DF110"
             style={{
-              top: props.coordinates.y,
-              left: props.coordinates.x,
+              top: object.position.y * 480,
+              left: object.position.x * 375,
               zIndex: 201,
-              opacity: showOverlay ? 0.25 : 1,
+              opacity: showOverlay ? 0.6 : 1,
             }}
             className={badge}
           >
@@ -77,7 +62,16 @@ const ProductBadge: FunctionComponent<Props> = (props: Props) => {
           </Badge>
         </HoverCard.Target>
         <HoverCard.Dropdown>
-          <ProductCard {...dummyResource} />
+          <ProductCard
+            title={object.name}
+            rating={object.ratings}
+            region={{ name: image.region }}
+            resourceId={image.productId!}
+            resourceType={image.productType! as ResourceType}
+            imageUrl={object.imageUrl}
+            originalPrice={object.originalPrice}
+            discountedPrice={object.discountedPrice}
+          />
         </HoverCard.Dropdown>
       </HoverCard>
     </>
