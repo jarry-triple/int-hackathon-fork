@@ -12,6 +12,7 @@ import {
   LoadingOverlay,
   Box,
   Grid,
+  Title,
 } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { useDisclosure } from '@mantine/hooks'
@@ -20,12 +21,15 @@ import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import axios from 'axios'
 import { ImageModel } from '../../types'
 import { ImageItem } from './ImageItem'
+import { useImagesContext } from '~/contexts/images-context'
 
 export function RecommendPage() {
   const [opened, { open, close }] = useDisclosure()
   const [file, setFile] = useState<File | null>()
   const [similarImages, setSimilarImages] = useState<ImageModel[]>([])
   const [loading, setLoading] = useState(false)
+
+  const { tags } = useImagesContext()
 
   useEffect(() => {
     const fetchLLMImage = async () => {
@@ -56,11 +60,25 @@ export function RecommendPage() {
       }
     }
 
-    fetchLLMImage()
+    const fetchImages = async (tags: string[]) => {
+      setLoading(true)
+      const result = await axios.get(
+        `/api/images/recommend?tags=${tags.join(',')}`,
+      )
+
+      setLoading(false)
+
+      setSimilarImages(result.data)
+    }
+
+    tags.length > 0 ? fetchImages(tags) : fetchLLMImage()
   }, [file])
 
   return (
-    <Container>
+    <div>
+      <Title order={3} style={{ paddingBottom: '5px', paddingTop: '5px' }}>
+        찾고 계신 느낌의 장소들 🔎
+      </Title>
       <Modal opened={opened} onClose={close} title="이미지 검색">
         <Dropzone
           onDrop={(files) => {
@@ -152,6 +170,6 @@ export function RecommendPage() {
           </Grid>
         )}
       </div>
-    </Container>
+    </div>
   )
 }

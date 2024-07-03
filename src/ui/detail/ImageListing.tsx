@@ -36,7 +36,7 @@ function ImageListingWithAddButton({
 }: {
   images: (string | undefined)[]
 }) {
-  const { selectedImages } = useImagesContext()
+  const { selectedImages, setTags } = useImagesContext()
   const router = useRouter()
 
   useEffect(() => {
@@ -47,7 +47,6 @@ function ImageListingWithAddButton({
 
   const [file, setFile] = useState<File | null>()
   const [similarImages, setSimilarImages] = useState<ImageModel[]>([])
-  const [imageUrls, setImageUrls] = useState<string[]>([])
   const [leftImages, setLeftImages] = useState<string[]>([])
   const [rightImages, setRightImages] = useState<string[]>([])
   const [loading, setLoading] = useState<boolean>(true)
@@ -83,8 +82,10 @@ function ImageListingWithAddButton({
     const fetchImages = async (ids: string[]) => {
       const result = await axios.get(`/api/images?ids=${ids.join(',')}`)
 
+      setTags(result.data.map((image: ImageModel) => image.tags).flat())
+
       const imageUrls = result.data.map(
-        (image: ImageModel) => image.imageUrl,
+        (image: ImageModel) => `${image.imageUrl}:::${image.productId}`,
       ) as string[]
 
       setLeftImages(imageUrls.filter((_, i) => i % 2 === 0))
@@ -107,10 +108,10 @@ function ImageListingWithAddButton({
         {leftImages.map((image, index) => (
           <Grid.Col key={index} span={12}>
             <ImageItem
-              id={image}
-              url={image}
+              id={image.split(':::')[1]}
+              url={image.split(':::')[0]}
               showForkButton={true}
-              key={image}
+              key={index}
             />
           </Grid.Col>
         ))}
@@ -144,8 +145,8 @@ function ImageListingWithAddButton({
         {rightImages.map((image, index) => (
           <Grid.Col key={index} span={12}>
             <ImageItem
-              id={image}
-              url={image}
+              id={image.split(':::')[1]}
+              url={image.split(':::')[0]}
               showForkButton={true}
               key={image}
             />
