@@ -1,7 +1,7 @@
 'use client'
 
 import { BackgroundImage, Box, Group, Stack } from '@mantine/core'
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useState } from 'react'
 
 import UserAvatar from './UserAvatar'
 import GoBackButton from './GoBackButton'
@@ -15,6 +15,15 @@ type Props = {
 }
 
 const ProdutHeader: FunctionComponent<Props> = (props) => {
+  const [forks, setForks] = useState(55)
+  const handleFork = (forked: boolean) => {
+    if (forked) {
+      setForks(forks + 1)
+    } else {
+      setForks(forks - 1)
+    }
+  }
+
   return (
     <BackgroundImage
       src={props.image.imageUrl}
@@ -33,8 +42,8 @@ const ProdutHeader: FunctionComponent<Props> = (props) => {
           <GoBackButton />
         </Box>
         <Group pb="1.5rem" px="1.5rem" justify="space-between" align="flex-end">
-          <UserAvatar />
-          <ForkButton />
+          <UserAvatar forks={forks} />
+          <ForkButton forkCallback={handleFork} />
         </Group>
       </Stack>
     </BackgroundImage>

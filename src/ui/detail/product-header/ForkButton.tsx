@@ -10,15 +10,17 @@ import { useImagesContext } from '~/contexts/images-context'
 type Props = {
   id?: string
   forkCallback?: (forked: boolean) => void
+  handleFork?: (forked: boolean) => void
 }
 
-const ForkButton = ({ id, forkCallback }: Props) => {
+const ForkButton = ({ id, handleFork, forkCallback }: Props) => {
   const [clicked, setClicked] = useState(false)
   const { selectedImages, setSelectedImages } = useImagesContext()
 
   const onButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
     setClicked(true)
     forkCallback && forkCallback(true)
+    handleFork && handleFork(false)
     if (id) {
       setSelectedImages(
         Array.from(
@@ -30,7 +32,6 @@ const ForkButton = ({ id, forkCallback }: Props) => {
 
   useEffect(() => {
     if (!clicked) return
-
     const timer = setTimeout(() => setClicked(false), 1000)
     return () => clearTimeout(timer)
   }, [clicked])
