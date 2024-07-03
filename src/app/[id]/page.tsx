@@ -13,37 +13,29 @@ type Props = {
   }
 }
 
-const dummyResource = {
-  imageUrl:
-    'https://images.pexels.com/photos/3667564/pexels-photo-3667564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-  title: '금문교',
-  info: '금문교는 샌프란시스코의 아이콘적인 관광지로, 두 개의 거대한 붉은 금문을 가진 아름다운 다리입니다.',
-  region: {
-    name: '샌프란시스코',
-  },
-  resourceType: 'attraction' as const,
-}
-
 export default async function ImageDetailPage({ params: { id } }: Props) {
   const image = await fetchImageById(id)
+  if (!image) {
+    throw new Error('Image not found')
+  }
 
   return (
     <div>
-      <ProductHeader />
+      <ProductHeader image={image} />
       <ResourceInfoCard
-        imageUrl={dummyResource.imageUrl}
-        title={dummyResource.title}
-        info={dummyResource.info}
-        region={dummyResource.region}
-        resourceType={dummyResource.resourceType}
+        imageUrl={image.imageUrl}
+        title={image.locationName}
+        info={image.locationSummary}
+        region={{ name: image.region }}
+        resourceType={image.productType as ResourceType}
       />
 
       <Text color="#2A2A2A" fz={18} fw={400}>
-        {`"${dummyResource.info}"`}
+        {`"${image.locationSummary}"`}
       </Text>
       <Space h={6} />
       <ProductListing />
-      <FlightList regionName={dummyResource.region.name} />
+      <FlightList regionName={image.region} />
       <MoreImages image={image} />
       <Space h={28} />
     </div>

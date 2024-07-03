@@ -8,13 +8,16 @@ import GoBackButton from './GoBackButton'
 import ForkButton from './ForkButton'
 import { wrapper } from './ProductHeader.css'
 import ProductBadge from './ProductBadge'
+import { ImageModel } from '~/types'
 
-type Props = {}
+type Props = {
+  image: ImageModel
+}
 
-const ProdutHeader: FunctionComponent = (props: Props) => {
+const ProdutHeader: FunctionComponent<Props> = (props) => {
   return (
     <BackgroundImage
-      src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-10.png"
+      src={props.image.imageUrl}
       h={480}
       w={375}
       className={wrapper}
