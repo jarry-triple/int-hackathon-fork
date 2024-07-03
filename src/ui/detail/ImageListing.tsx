@@ -1,6 +1,15 @@
 'use client'
 
-import { Button, FileButton, Flex, Grid, Image } from '@mantine/core'
+import {
+  Box,
+  Button,
+  Center,
+  FileButton,
+  Flex,
+  Grid,
+  Image,
+  LoadingOverlay,
+} from '@mantine/core'
 import { ImageItem } from '~/ui/detail/ImageItem'
 import { useEffect, useMemo, useState } from 'react'
 import { useImagesContext } from '~/contexts/images-context'
@@ -99,7 +108,17 @@ function ImageListingWithAddButton({
   }, [file, images])
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <Box pt={740}>
+        <Center>
+          <LoadingOverlay
+            visible={loading}
+            zIndex={1000}
+            loaderProps={{ color: '#3DF110', type: 'dots' }}
+          />
+        </Center>
+      </Box>
+    )
   }
 
   return (
