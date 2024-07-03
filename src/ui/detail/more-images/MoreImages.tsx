@@ -39,7 +39,7 @@ const MoreImages: FunctionComponent<Props> = ({ image }) => {
           },
         )
 
-        setSimilarImages(response.data.slice(0, 8))
+        setSimilarImages(response.data.slice(1, 9))
       } catch (error) {
         console.error('Error uploading the image:', error)
       } finally {
