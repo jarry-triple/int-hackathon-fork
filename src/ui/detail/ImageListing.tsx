@@ -22,17 +22,19 @@ import { ImageModel } from '../../types'
 export function ImageListing({
   images,
   showAddButton,
+  clickable,
 }: {
   images: (string | undefined)[]
   showAddButton: boolean
+  clickable?: boolean
 }) {
   return showAddButton ? (
-    <ImageListingWithAddButton images={images} />
+    <ImageListingWithAddButton images={images} clickable={clickable} />
   ) : (
     <Grid gutter="xs">
       {images.map((image, index) => (
         <Grid.Col key={index} span={6}>
-          <ImageItem id={image ?? uuid()} url={image} />
+          <ImageItem id={image ?? uuid()} url={image} clickable={clickable} />
         </Grid.Col>
       ))}
     </Grid>
@@ -41,8 +43,10 @@ export function ImageListing({
 
 function ImageListingWithAddButton({
   images,
+  clickable,
 }: {
   images: (string | undefined)[]
+  clickable?: boolean
 }) {
   const { selectedImages, setTags, setSimilarImages } = useImagesContext()
   const router = useRouter()
@@ -134,6 +138,7 @@ function ImageListingWithAddButton({
               url={image.split(':::')[0]}
               showForkButton={true}
               key={index}
+              clickable={clickable}
             />
           </Grid.Col>
         ))}
@@ -167,6 +172,7 @@ function ImageListingWithAddButton({
               url={image.split(':::')[0]}
               showForkButton={true}
               key={image}
+              clickable={clickable}
             />
           </Grid.Col>
         ))}

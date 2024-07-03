@@ -39,7 +39,11 @@ export function DefaultPage() {
         </Text>
       </div>
       <div>
-        <ImageListing images={DEFAULT_IMAGE_IDS} showAddButton={true} />
+        <ImageListing
+          images={DEFAULT_IMAGE_IDS}
+          showAddButton={true}
+          clickable={false}
+        />
       </div>
     </div>
   )

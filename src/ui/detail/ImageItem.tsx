@@ -10,9 +10,15 @@ interface ImageItemProps {
   id: string
   url?: string
   showForkButton?: boolean
+  clickable?: boolean
 }
 
-export function ImageItem({ id, url, showForkButton }: ImageItemProps) {
+export function ImageItem({
+  id,
+  url,
+  showForkButton,
+  clickable = true,
+}: ImageItemProps) {
   const router = useRouter()
   const { hovered, ref } = useHover<HTMLImageElement>()
   const [forked, setForked] = useState(false)
@@ -29,7 +35,7 @@ export function ImageItem({ id, url, showForkButton }: ImageItemProps) {
           position: 'relative',
           border: forked ? '5px solid #3DF110' : 'none',
         }}
-        onClick={() => router.push(`/${id}`)}
+        onClick={() => clickable && router.push(`/${id}`)}
         alt="image"
         radius="lg"
         src={url}
