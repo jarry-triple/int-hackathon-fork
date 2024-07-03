@@ -54,7 +54,7 @@ export function ProductListing() {
       <Text
         lineClamp={1}
         color="#2A2A2A"
-        fz={16}
+        fz={20}
         fw="bold"
         mb={0}
         style={{ marginTop: '20px' }}

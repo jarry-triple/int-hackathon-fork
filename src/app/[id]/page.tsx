@@ -47,7 +47,7 @@ export default function ImageDetailPage(props: Props) {
         resourceType={dummyResource.resourceType}
       />
 
-      <Text lineClamp={2} color="#2A2A2A" fz={18} fw={400}>
+      <Text color="#2A2A2A" fz={18} fw={400}>
         {`"${dummyResource.info}"`}
       </Text>
       <Space h={6} />
@@ -65,7 +65,7 @@ function FlightList({ regionName }: { regionName: string }) {
       <Text
         lineClamp={1}
         color="#2A2A2A"
-        fz={16}
+        fz={20}
         fw="bold"
         mb={0}
         style={{ marginTop: '20px' }}

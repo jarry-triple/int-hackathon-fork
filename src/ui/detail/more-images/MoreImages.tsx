@@ -13,12 +13,12 @@ const MoreImages: FunctionComponent<Props> = ({ images }) => {
         <Text
           lineClamp={1}
           color="#2A2A2A"
-          fz={16}
+          fz={20}
           fw="bold"
           mb={0}
           style={{ marginTop: '20px' }}
         >
-          더 찾아보기
+          이런 곳도 좋아하실 것 같아요!
         </Text>
       </div>
       <div>
