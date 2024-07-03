@@ -46,8 +46,6 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error('Error processing the image:', error)
     return NextResponse.json('Error processing the image', { status: 500 })
-  } finally {
-    await client.close()
   }
 }
 

@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Badge,
   Center,
@@ -9,7 +7,7 @@ import {
   Popover,
   Text,
 } from '@mantine/core'
-import { FunctionComponent, useEffect, useRef, useState } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { IconPlus } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
 import ProductCard from './ProductCard'

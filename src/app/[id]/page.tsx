@@ -1,4 +1,3 @@
-'use client'
 import { Button, Container, Flex, Image, Space, Text } from '@mantine/core'
 
 import { ResourceType, toReadableResourceType } from '~/utils/resource-types'
@@ -6,6 +5,7 @@ import { toDotSeparatedString } from '~/utils/string-utils'
 import ProductHeader from '~/ui/detail/product-header/ProductHeader'
 import MoreImages from '~/ui/detail/more-images/MoreImages'
 import { ProductListing } from '~/ui/detail/product-listing'
+import { fetchImageById } from '~/utils/fetch-user-by-id'
 
 type Props = {
   params: {
@@ -24,20 +24,11 @@ const dummyResource = {
   resourceType: 'attraction' as const,
 }
 
-const dummyImages = [
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-]
+export default async function ImageDetailPage({ params: { id } }: Props) {
+  const image = await fetchImageById(id)
 
-export default function ImageDetailPage(props: Props) {
   return (
-    <>
+    <div>
       <ProductHeader />
       <ResourceInfoCard
         imageUrl={dummyResource.imageUrl}
@@ -53,9 +44,9 @@ export default function ImageDetailPage(props: Props) {
       <Space h={6} />
       <ProductListing />
       <FlightList regionName={dummyResource.region.name} />
-      <MoreImages images={dummyImages} />
+      <MoreImages image={image} />
       <Space h={28} />
-    </>
+    </div>
   )
 }
 

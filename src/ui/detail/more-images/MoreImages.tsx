@@ -1,12 +1,55 @@
-import { Text } from '@mantine/core'
-import { FunctionComponent } from 'react'
-import { ImageListing } from '../ImageListing'
+'use client'
 
+import { Box, Center, Grid, Loader, Text } from '@mantine/core'
+import { FunctionComponent, useEffect, useState } from 'react'
+import { convertImageToBase64 } from '~/utils/convert-image-to-base64'
+import { ImageItem } from '../ImageItem'
+import { ImageModel } from '~/types'
+import axios from 'axios'
+import { ImageListing } from '../ImageListing'
 type Props = {
-  images: (string | undefined)[]
+  image?: ImageModel
 }
 
-const MoreImages: FunctionComponent<Props> = ({ images }) => {
+const MoreImages: FunctionComponent<Props> = ({ image }) => {
+  const [loading, setLoading] = useState(true)
+  const [similarImages, setSimilarImages] = useState<ImageModel[]>([])
+
+  useEffect(() => {
+    const fetchLLMImage = async () => {
+      if (!image) {
+        return
+      }
+
+      const resp = await axios.get<Blob>(image.imageUrl, {
+        responseType: 'blob',
+      })
+
+      const formData = new FormData()
+      formData.append('file', resp.data)
+
+      try {
+        const response = await axios.post<ImageModel[]>(
+          '/api/images',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          },
+        )
+
+        setSimilarImages(response.data.slice(0, 8))
+      } catch (error) {
+        console.error('Error uploading the image:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchLLMImage()
+  }, [image])
+
   return (
     <div>
       <div>
@@ -21,9 +64,18 @@ const MoreImages: FunctionComponent<Props> = ({ images }) => {
           이런 곳도 좋아하실 것 같아요!
         </Text>
       </div>
-      <div>
-        <ImageListing images={images} showAddButton={false} />
-      </div>
+      <Box pt={20} pb={20}>
+        {loading ? (
+          <Center>
+            <Loader size={50} />
+          </Center>
+        ) : (
+          <ImageListing
+            images={similarImages.map((image) => image.imageUrl)}
+            showAddButton={false}
+          />
+        )}
+      </Box>
     </div>
   )
 }

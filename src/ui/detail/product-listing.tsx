@@ -1,3 +1,4 @@
+'use client'
 import { Flex, Image, Text } from '@mantine/core'
 
 import { useHover } from '@mantine/hooks'

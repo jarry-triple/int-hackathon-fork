@@ -29,6 +29,8 @@ const ForkButton = ({ id, forkCallback }: Props) => {
   }
 
   useEffect(() => {
+    if (!clicked) return
+
     const timer = setTimeout(() => setClicked(false), 1000)
     return () => clearTimeout(timer)
   }, [clicked])
