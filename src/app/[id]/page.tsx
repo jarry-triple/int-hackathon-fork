@@ -47,9 +47,10 @@ export default function ImageDetailPage(props: Props) {
         resourceType={dummyResource.resourceType}
       />
 
-      <Text lineClamp={2} color="#2A2A2A" fz={16} mt={4}>
+      <Text lineClamp={2} color="#2A2A2A" fz={18} fw={400}>
         {`"${dummyResource.info}"`}
       </Text>
+      <Space h={6} />
       <ProductListing />
       <FlightList regionName={dummyResource.region.name} />
       <MoreImages images={dummyImages} />
@@ -142,7 +143,7 @@ function ResourceInfoCard({
   resourceType,
 }: ResourceInfoCardProps) {
   return (
-    <Flex justify="center" align="center" py={10} px={10}>
+    <Flex justify="center" align="center" py={10} px={10} mb={16}>
       {/* 1st column - Image */}
       <Container flex={1} w={64} h={64} miw={64} mih={64} p={0}>
         <Image
